@@ -10,7 +10,9 @@ const GUIDE_SLUGS = new Set(GUIDES.map((guide) => guide.slug));
 export function proxy(request: NextRequest) {
   const slug = request.nextUrl.pathname.split("/")[2];
   if (GUIDE_SLUGS.has(slug)) return NextResponse.next();
-  return NextResponse.rewrite(new URL("/_not-found", request.url));
+  // `/404` and the explicit status both matter: a host that serves the
+  // prerendered not-found page as a plain static file would answer 200.
+  return NextResponse.rewrite(new URL("/404", request.url), { status: 404 });
 }
 
 export const config = {
