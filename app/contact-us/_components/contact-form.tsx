@@ -7,11 +7,12 @@ import { pillLink } from "@/lib/pill-link";
 import { SITE } from "@/lib/site";
 import styles from "./contact.module.css";
 
-// Every subject goes to the same address; the subject line says which it is.
+// Every subject goes to the support address; the subject line says which
+// it is.
 const SUBJECTS = [
-  { label: "Product inquiry", to: SITE.email },
-  { label: "Technical support", to: SITE.email },
-  { label: "General question", to: SITE.email },
+  { label: "Product inquiry", to: SITE.supportEmail },
+  { label: "Technical support", to: SITE.supportEmail },
+  { label: "General question", to: SITE.supportEmail },
 ];
 
 export function ContactForm() {

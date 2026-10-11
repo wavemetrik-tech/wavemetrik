@@ -81,7 +81,7 @@ export const organizationSchema = {
     {
       "@type": "ContactPoint",
       contactType: "technical support",
-      email: SITE.email,
+      email: SITE.supportEmail,
     },
   ],
 };

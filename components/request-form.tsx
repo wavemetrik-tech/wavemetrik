@@ -6,7 +6,8 @@ import { TextField } from "@/components/form-field";
 import { pillLink } from "@/lib/pill-link";
 import { SITE } from "@/lib/site";
 
-const TO = SITE.email;
+// Requests from every form go to the support address.
+const TO = SITE.supportEmail;
 
 // The fields for asking Wavemetrik to send a document that is not published
 // on the site. Like the contact form, it prepares an email in the visitor's

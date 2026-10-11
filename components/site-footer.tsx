@@ -4,7 +4,6 @@ import { FooterSpectrum } from "@/components/footer-spectrum";
 import { ArrowUpRightIcon } from "lucide-react";
 import { Logo } from "@/components/logo";
 import { pillLink } from "@/lib/pill-link";
-import { SITE } from "@/lib/site";
 
 // Reading the clock is not allowed while a page is prerendered, so the year
 // is written out. Update it each January.
@@ -106,10 +105,18 @@ export function SiteFooter() {
               <ul className="mt-4 flex flex-col gap-2">
                 <li>
                   <a
-                    href={`mailto:${SITE.email}`}
+                    href="mailto:sales@wavemetrik.com"
                     className={`font-medium [overflow-wrap:anywhere] ${LINK}`}
                   >
-                    {SITE.email}
+                    sales@wavemetrik.com
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="mailto:support@wavemetrik.com"
+                    className={`font-medium [overflow-wrap:anywhere] ${LINK}`}
+                  >
+                    support@wavemetrik.com
                   </a>
                 </li>
                 <li>

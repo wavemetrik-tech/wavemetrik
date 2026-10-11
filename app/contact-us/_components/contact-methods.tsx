@@ -1,14 +1,19 @@
 import { ArrowUpRightIcon } from "lucide-react";
 import { pillLink } from "@/lib/pill-link";
-import { SITE } from "@/lib/site";
 import styles from "./contact.module.css";
 
 const METHODS = [
   {
-    name: "Email us",
-    value: SITE.email,
-    href: `mailto:${SITE.email}`,
-    description: "Product information, quotes and help with your test setup",
+    name: "Sales",
+    value: "sales@wavemetrik.com",
+    href: "mailto:sales@wavemetrik.com",
+    description: "Product information, quotes and enterprise solutions",
+  },
+  {
+    name: "Technical support",
+    value: "support@wavemetrik.com",
+    href: "mailto:support@wavemetrik.com",
+    description: "Help with your products and test setup",
   },
   {
     name: "Give us a call",
