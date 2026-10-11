@@ -1,5 +1,0 @@
-# Shared footer illustration — accepted direction
-Preserve the original compact spectrum strip, its original channel silhouettes, three inline Wi-Fi band labels and decorative hover behavior. The user rejected the three instrument displays and mobile selector. Do not restore that redesign. Polish through a faint calibration grid, noise-floor trace, small bandwidth brackets, subcarrier ticks and peak markers. No new controls or layout changes. Logo blue and the existing theme palette remain.
-
-# Motion and hover
-Slow scanning sweep, staggered channel breathing and gentle carrier amplitude pulses. Hover shows a smooth cursor-following probe and softly highlights the current band, dims the others to 40%, and accents its existing label. Pointer leaving resets the artwork. Touch leaves the decorative illustration static with ambient motion only. Offscreen loops pause through the existing shared visibility observer; reduced motion disables loops, scan and transition motion. Keep footer copy and navigation untouched.
