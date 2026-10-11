@@ -3,6 +3,8 @@
 import { ChevronDownIcon } from "lucide-react";
 import { useRef } from "react";
 import { RequestForm } from "@/components/request-form";
+import { capture } from "@/lib/posthog";
+import { posthogLog } from "@/lib/posthog-log";
 import {
   Popover,
   PopoverContent,
@@ -35,7 +37,13 @@ export function DatasheetRequest({
       onOpenChangeComplete={(open) => {
         // The dropdown always opens downward; if its end is below the
         // window, the page moves just enough to show it.
-        if (open)
+        if (open) {
+          capture("datasheet_request_opened", {
+            product: product || undefined,
+          });
+          posthogLog.info("Datasheet request opened", {
+            product: product || undefined,
+          });
           popup.current?.scrollIntoView({
             block: "nearest",
             behavior: window.matchMedia("(prefers-reduced-motion: reduce)")
@@ -43,6 +51,7 @@ export function DatasheetRequest({
               ? "auto"
               : "smooth",
           });
+        }
       }}
     >
       <PopoverTrigger className={`group/request cursor-pointer ${className}`}>

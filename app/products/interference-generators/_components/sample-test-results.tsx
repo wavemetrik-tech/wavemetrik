@@ -11,7 +11,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { gsap, useGSAP } from "@/lib/gsap";
+import {
+  animateEach,
+  EASE_IN_OUT,
+  fadeIn,
+  useRevealOnce,
+} from "@/lib/use-reveal-once";
 
 import {
   accessPoints,
@@ -27,40 +32,30 @@ const TAB_TRIGGER_CLASS =
   "px-4 text-[0.8125rem] leading-[1.125rem] text-muted-foreground";
 const TABLE_HEAD_CLASS = "text-[0.8125rem] leading-[1.125rem] font-semibold";
 
+// Each series is wiped in from the left, then the cursor appears.
+function drawSeries(root: HTMLElement) {
+  const series = animateEach(
+    root,
+    ".chart-series",
+    [
+      { clipPath: "inset(-8px 100% -8px -8px)" },
+      { clipPath: "inset(-8px 0% -8px -8px)" },
+    ],
+    { duration: 1400, stagger: 150, easing: EASE_IN_OUT },
+  );
+  const drawn = 1400 + 150 * Math.max(0, series.length - 1);
+  return [
+    ...series,
+    ...fadeIn(root, ".chart-cursor", { duration: 400, delay: drawn - 350 }),
+  ];
+}
+
 export function SampleTestResults() {
   const sectionRef = useRef<HTMLElement>(null);
   const [view, setView] = useState("chart");
   const [activeIndex, setActiveIndex] = useState(INITIAL_INDEX);
 
-  useGSAP(
-    () => {
-      const mm = gsap.matchMedia();
-      mm.add("(prefers-reduced-motion: no-preference)", () => {
-        gsap.set(".chart-cursor", { autoAlpha: 0 });
-        gsap
-          .timeline({
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: "top 70%",
-              once: true,
-            },
-          })
-          .fromTo(
-            ".chart-series",
-            { clipPath: "inset(-8px 100% -8px -8px)" },
-            {
-              clipPath: "inset(-8px 0% -8px -8px)",
-              duration: 1.4,
-              ease: "power2.inOut",
-              stagger: 0.15,
-              clearProps: "clipPath",
-            },
-          )
-          .to(".chart-cursor", { autoAlpha: 1, duration: 0.4 }, "-=0.35");
-      });
-    },
-    { scope: sectionRef },
-  );
+  useRevealOnce(sectionRef, 0.7, drawSeries);
 
   return (
     <section

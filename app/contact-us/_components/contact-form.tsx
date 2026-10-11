@@ -4,6 +4,8 @@ import { ArrowUpRightIcon, CheckIcon } from "lucide-react";
 import { useState } from "react";
 import { TextAreaField, TextField } from "@/components/form-field";
 import { pillLink } from "@/lib/pill-link";
+import { capture } from "@/lib/posthog";
+import { posthogLog } from "@/lib/posthog-log";
 import { SITE } from "@/lib/site";
 import styles from "./contact.module.css";
 
@@ -42,6 +44,10 @@ export function ContactForm() {
     })
       .toString()
       .replace(/\+/g, "%20");
+    capture("contact_email_draft_opened", { inquiry_type: subject.label });
+    posthogLog.info("Contact email draft opened", {
+      inquiry_type: subject.label,
+    });
     setSentTo(subject.to);
     window.location.assign(`mailto:${subject.to}?${query}`);
   }

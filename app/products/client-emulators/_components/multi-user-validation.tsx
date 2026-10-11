@@ -1,4 +1,4 @@
-// From slide 21 of the capabilities deck (content/wavemetrik-presentation.md).
+// From slide 21 of the capabilities deck.
 // The drawings are schematic: they show what each feature does to a
 // transmission, not measured traffic.
 const FEATURES = [

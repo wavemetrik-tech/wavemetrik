@@ -4,7 +4,7 @@ import { LineChart } from "@/components/charts/line-chart";
 import { clientLoadThroughput, MSS_BYTES } from "../_data/measurements";
 import { ChartTile, StatTile, TILE_TABS } from "./tiles";
 
-// From slide 16 of the capabilities deck (content/wavemetrik-presentation.md).
+// From slide 16 of the capabilities deck.
 const RESULTS = [
   { value: "2,425", detail: "With 1 client at 1500-byte MSS" },
   { value: "1,264", detail: "Aggregate with 24 clients at the same MSS" },

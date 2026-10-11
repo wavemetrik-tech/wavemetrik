@@ -787,6 +787,16 @@
     transform: translateY(var(--fx-rise, 18px));
   }
 }
+/* The same rise, for a hero's text. It starts a hair above invisible because
+   Chrome does not count text painted at opacity 0 as shown: it would time
+   the hero's text, the largest on the page, at the end of this animation
+   rather than at its start. */
+@keyframes fx-rise-text {
+  from {
+    opacity: 0.01;
+    transform: translateY(var(--fx-rise, 18px));
+  }
+}
 @keyframes fx-fade {
   from {
     opacity: 0;
@@ -854,7 +864,7 @@
   .page-hero .hero-copy > *,
   .page-hero > .grid > :first-child:not(figure) > *,
   .page-hero > :is(p, h1, nav) {
-    animation: fx-rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+    animation: fx-rise-text 0.8s cubic-bezier(0.22, 1, 0.36, 1) backwards;
   }
   .page-hero .hero-copy > :nth-child(2),
   .page-hero > .grid > :first-child:not(figure) > :nth-child(2),

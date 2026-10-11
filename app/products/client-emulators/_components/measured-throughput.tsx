@@ -3,7 +3,7 @@ import { LineChart } from "@/components/charts/line-chart";
 import { mloThroughput, TRACE_STEP_SECONDS } from "../_data/measurements";
 import { ChartTile, StatTile } from "./tiles";
 
-// From slide 13 of the capabilities deck (content/wavemetrik-presentation.md).
+// From slide 13 of the capabilities deck.
 const RESULTS = [
   { value: ">5.4", platform: "MT-C24", detail: "2×2 MIMO OTA" },
   { value: ">8.5", platform: "MT-BE", detail: "TCP MLO OTA" },

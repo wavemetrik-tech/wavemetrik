@@ -302,7 +302,7 @@ export function SiteHeader() {
             href="/"
             aria-label="Wavemetrik home"
             onClick={closeAll}
-            className="h-5 shrink-0 rounded-sm text-brand outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background sm:h-6 dark:text-foreground"
+            className="h-5 shrink-0 rounded-sm text-brand outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background sm:h-6"
           >
             <Logo />
           </Link>

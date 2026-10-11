@@ -8,7 +8,7 @@ import { ContactMethods, ContactLocation } from "./_components/contact-methods";
 import styles from "./_components/contact.module.css";
 
 const PAGE = {
-  title: "Contact Wavemetrik",
+  title: "Contact us",
   description:
     "Reach Wavemetrik sales and technical support by email or phone, or visit us in Bangalore, for Wi-Fi test systems, client emulators and interference generators.",
   path: "/contact-us",
@@ -30,9 +30,12 @@ export default function ContactUsPage() {
         <h1 id="hero-heading" className="sr-only">
           Contact Wavemetrik
         </h1>
+        {/* The form comes first in the markup, as it does on a phone, where
+            it stands above the contacts. From desktop width the grid puts
+            the contacts in the left column beside it. */}
         <div className={styles.workspace}>
-          <ContactMethods />
           <ContactForm />
+          <ContactMethods />
         </div>
       </section>
       <ContactLocation />

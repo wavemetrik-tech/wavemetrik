@@ -1,8 +1,7 @@
 import Link from "next/link";
 
 // Two short briefs. MT-Sniffer is from slides 19, 31 and 32 of the
-// capabilities deck (content/wavemetrik-presentation.md); MT-SYS is from
-// slides 3, 4 and 9, and has its own page.
+// capabilities deck; MT-SYS is from slides 3, 4 and 9, and has its own page.
 const PRODUCTS = [
   {
     name: "MT-Sniffer",

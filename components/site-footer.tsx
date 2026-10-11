@@ -46,7 +46,7 @@ export function SiteFooter() {
             <Link
               href="/"
               aria-label="Wavemetrik home"
-              className="block h-6 w-fit rounded-sm text-brand outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background dark:text-foreground"
+              className="block h-6 w-fit rounded-sm text-brand outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
             >
               <Logo />
             </Link>

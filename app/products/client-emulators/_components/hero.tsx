@@ -7,7 +7,7 @@ import { pillLink } from "@/lib/pill-link";
 
 import { RadioPaths } from "./radio-paths";
 
-// From slide 8 of the capabilities deck (content/wavemetrik-presentation.md).
+// From slide 8 of the capabilities deck.
 export const HEADLINE_SPECS = [
   { label: "Real radios, MT-C24", value: "Up to 24" },
   { label: "Stations per band, MT-BE", value: "Up to 128" },

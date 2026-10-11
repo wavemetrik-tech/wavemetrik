@@ -1,6 +1,5 @@
 // From the block-diagram slides of the Wavemetrik capabilities deck
-// (content/wavemetrik-presentation.md, slides 4 to 6). Descriptions are read
-// off the diagrams and their notes.
+// (slides 4 to 6). Descriptions are read off the diagrams and their notes.
 
 export type SystemId = "compact" | "scalable" | "tr398" | "mesh";
 

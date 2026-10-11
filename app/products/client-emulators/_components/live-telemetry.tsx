@@ -9,7 +9,7 @@ import {
 } from "../_data/measurements";
 import { ChartTile, TextTile } from "./tiles";
 
-// From slide 12 of the capabilities deck (content/wavemetrik-presentation.md).
+// From slide 12 of the capabilities deck.
 const POINTS = [
   {
     title: "Per-link visibility",

@@ -8,45 +8,40 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { gsap, useGSAP } from "@/lib/gsap";
+import {
+  animateEach,
+  EASE_IN_OUT,
+  fadeIn,
+  useRevealOnce,
+} from "@/lib/use-reveal-once";
 
 import { type SetupPartId, setupParts } from "../_data/reference-configuration";
 import { SetupIllustration } from "./setup-illustration";
+
+// The cables are drawn one after another, then the signals on them appear.
+function drawSetup(root: HTMLElement) {
+  const cables = animateEach(
+    root,
+    ".setup-cable",
+    [
+      { strokeDasharray: 1, strokeDashoffset: 1 },
+      { strokeDasharray: 1, strokeDashoffset: 0 },
+    ],
+    { duration: 1100, stagger: 120, easing: EASE_IN_OUT },
+  );
+  const drawn = 1100 + 120 * Math.max(0, cables.length - 1);
+  return [
+    ...cables,
+    ...fadeIn(root, ".setup-signal", { duration: 500, delay: drawn - 200 }),
+  ];
+}
 
 export function ReferenceTestConfiguration() {
   const sectionRef = useRef<HTMLElement>(null);
   const [selected, setSelected] = useState<SetupPartId>("wave");
   const [hovered, setHovered] = useState<SetupPartId | null>(null);
 
-  useGSAP(
-    () => {
-      const mm = gsap.matchMedia();
-      mm.add("(prefers-reduced-motion: no-preference)", () => {
-        gsap.set(".setup-signal", { autoAlpha: 0 });
-        gsap
-          .timeline({
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: "top 65%",
-              once: true,
-            },
-          })
-          .fromTo(
-            ".setup-cable",
-            { strokeDasharray: 1, strokeDashoffset: 1 },
-            {
-              strokeDashoffset: 0,
-              duration: 1.1,
-              ease: "power2.inOut",
-              stagger: 0.12,
-              clearProps: "strokeDasharray,strokeDashoffset",
-            },
-          )
-          .to(".setup-signal", { autoAlpha: 1, duration: 0.5 }, "-=0.2");
-      });
-    },
-    { scope: sectionRef },
-  );
+  useRevealOnce(sectionRef, 0.65, drawSetup);
 
   return (
     <section

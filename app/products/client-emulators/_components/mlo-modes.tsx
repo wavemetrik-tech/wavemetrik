@@ -1,4 +1,4 @@
-// From slide 18 of the capabilities deck (content/wavemetrik-presentation.md).
+// From slide 18 of the capabilities deck.
 // The timelines are schematic: they show which link is busy when, not
 // measured traffic.
 

@@ -1,4 +1,4 @@
-// From slide 11 of the capabilities deck (content/wavemetrik-presentation.md).
+// From slide 11 of the capabilities deck.
 const STAGES = [
   {
     name: "Define",

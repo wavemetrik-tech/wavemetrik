@@ -1,7 +1,7 @@
 // Facts about the company and the site that metadata, structured data and
 // the sitemap share. The live site answers on the www host.
 export const SITE = {
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.wavemetrik.com",
+  url: process.env.NEXT_PUBLIC_SITE_URL || "https://www.wavemetrik.com",
   name: "Wavemetrik",
   legalName: "Wavemetrik Technologies Pvt. Ltd.",
   tagline: "Precision at every frequency.",

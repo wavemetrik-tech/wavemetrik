@@ -4,6 +4,8 @@ import { ArrowUpRightIcon, CheckIcon } from "lucide-react";
 import { useState } from "react";
 import { TextField } from "@/components/form-field";
 import { pillLink } from "@/lib/pill-link";
+import { capture } from "@/lib/posthog";
+import { posthogLog } from "@/lib/posthog-log";
 import { SITE } from "@/lib/site";
 
 // Requests from every form go to the support address.
@@ -51,6 +53,14 @@ export function RequestForm({
     })
       .toString()
       .replace(/\+/g, "%20");
+    capture("document_request_email_draft_opened", {
+      document_type: document,
+      product: product || undefined,
+    });
+    posthogLog.info("Document request email draft opened", {
+      document_type: document,
+      product: product || undefined,
+    });
     setPrepared(true);
     window.location.assign(`mailto:${TO}?${query}`);
   }

@@ -1,6 +1,6 @@
 import { PartDrawing } from "@/components/diagrams/part-drawings";
 
-// From slide 8 of the capabilities deck (content/wavemetrik-presentation.md).
+// From slide 8 of the capabilities deck.
 const PLATFORMS = [
   {
     id: "real",

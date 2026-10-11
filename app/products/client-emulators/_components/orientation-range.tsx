@@ -7,7 +7,7 @@ import {
 } from "../_data/measurements";
 import { ChartTile, StatTile, TextTile, TILE_TABS } from "./tiles";
 
-// From slide 15 of the capabilities deck (content/wavemetrik-presentation.md).
+// From slide 15 of the capabilities deck.
 const POINTS = [
   {
     title: "Orientation sensitivity",

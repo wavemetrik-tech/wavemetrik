@@ -3,7 +3,7 @@ import { LineChart } from "@/components/charts/line-chart";
 import { sweepThroughput, TRACE_STEP_SECONDS } from "../_data/measurements";
 import { ChartTile, TextTile } from "./tiles";
 
-// From slide 14 of the capabilities deck (content/wavemetrik-presentation.md).
+// From slide 14 of the capabilities deck.
 const POINTS = [
   {
     title: "Controlled variable",

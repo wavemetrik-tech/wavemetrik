@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { AccessPoint, Attenuator } from "@/components/diagrams/parts";
 
-// From slide 10 of the capabilities deck (content/wavemetrik-presentation.md).
+// From slide 10 of the capabilities deck.
 const POINTS = [
   {
     title: "A path for each radio",

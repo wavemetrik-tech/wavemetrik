@@ -11,7 +11,7 @@ import { Values } from "./_components/values";
 import { Vision } from "./_components/vision";
 
 const PAGE = {
-  title: "About Wavemetrik",
+  title: "About us",
   description:
     "Wavemetrik delivers wireless test and measurement solutions from Bangalore: Wi-Fi 7 client emulation, interference generation and complete test systems.",
   path: "/about-us",

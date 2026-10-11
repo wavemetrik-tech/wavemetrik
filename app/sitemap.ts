@@ -2,7 +2,6 @@ import type { MetadataRoute } from "next";
 import { absoluteUrl } from "@/lib/site";
 import { GUIDES } from "./resources/_data/guides";
 
-// The placeholder policy pages are left out until they have their text.
 export default function sitemap(): MetadataRoute.Sitemap {
   const page = (
     path: string,
@@ -21,5 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...GUIDES.map((guide) => page(`/resources/${guide.slug}`, 0.6)),
     page("/about-us", 0.5, "yearly"),
     page("/contact-us", 0.5, "yearly"),
+    page("/privacy-policy", 0.3, "yearly"),
+    page("/terms-conditions", 0.3, "yearly"),
   ];
 }

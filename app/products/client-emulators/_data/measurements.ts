@@ -1,5 +1,5 @@
 // Measurement data behind the charts on the client emulators page, from
-// slides 12 to 16 of the capabilities deck (content/wavemetrik-presentation.md).
+// slides 12 to 16 of the capabilities deck.
 //
 // Only the client-load figures are exact: they come from the chart's own data
 // in the deck. Everything else was read off the plot images in the deck, so it

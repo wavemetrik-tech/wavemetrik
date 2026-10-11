@@ -1,4 +1,4 @@
-// From slide 2 of the capabilities deck (content/wavemetrik-presentation.md).
+// From slide 2 of the capabilities deck.
 const DOMAINS = [
   {
     name: "Performance & RF",

@@ -1,4 +1,4 @@
-// From the Wavemetrik capabilities deck (content/wavemetrik-presentation.md):
+// From the Wavemetrik capabilities deck:
 // the platform table on slide 7, with specifications from slides 8, 9, 11,
 // 19, 22, 24 and 36.
 
