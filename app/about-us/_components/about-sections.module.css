@@ -1,0 +1,321 @@
+.index {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--link);
+  font-variant-numeric: tabular-nums;
+}
+
+.values {
+  display: grid;
+  gap: 2rem;
+  border-radius: 1.75rem;
+  padding: 2rem;
+  background: var(--muted);
+}
+
+.value {
+  min-width: 0;
+}
+.value + .value {
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+
+.expertiseHeader {
+  display: grid;
+  align-items: end;
+  gap: 1.5rem;
+}
+.expertiseHeader h2 {
+  max-width: 17ch;
+}
+.capabilities {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 2.5rem;
+}
+.featuredCapability,
+.compactCapability {
+  min-width: 0;
+  overflow: hidden;
+  border-radius: 1.75rem;
+  background: var(--muted);
+}
+.featuredCapability {
+  display: flex;
+  flex-direction: column;
+}
+.productDrawing {
+  padding: 1.5rem 1.5rem 0;
+  background: transparent;
+}
+.productDrawing > svg {
+  height: 12.5rem;
+}
+.capabilityCopy {
+  min-width: 0;
+  padding: 1.5rem 2rem 2rem;
+}
+.productLink {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  border-radius: 0.25rem;
+  color: var(--link);
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+.linkArrow {
+  display: inline-flex;
+  width: 1.75rem;
+  height: 1.75rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--brand) 8%, var(--background));
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.productLink:hover .linkArrow {
+  transform: translate(2px, -2px);
+}
+.productLink:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 4px;
+}
+.compactCapability {
+  display: grid;
+  grid-template-columns: 6rem minmax(0, 1fr);
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+}
+.compactDrawing {
+  background: var(--background);
+  padding: 0.5rem;
+  border-radius: 1rem;
+}
+.compactCapability .capabilityCopy {
+  padding: 0;
+}
+
+.vision {
+  overflow: hidden;
+  border-radius: 1.75rem;
+  padding: 2rem;
+  background: var(--muted);
+}
+.visionMain {
+  display: grid;
+  align-items: center;
+  gap: 1rem;
+}
+.visionArt {
+  width: min(100%, 22rem);
+  margin-inline: auto;
+}
+.visionGoals {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+.visionGoals > li {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0.75rem;
+}
+.goalMarker {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.goalMarker > span:first-child {
+  width: 0.5rem;
+  height: 0.5rem;
+  flex-shrink: 0;
+  border: 1px solid var(--link);
+  border-radius: 50%;
+  background: var(--background);
+}
+
+.contact {
+  --foreground: #fff;
+  --muted-foreground: #ffffffcc;
+  --link: #fff;
+  --border: #ffffff40;
+  display: grid;
+  align-items: start;
+  gap: 2.5rem;
+  border-radius: 1.75rem;
+  padding: 2rem;
+  background: var(--brand);
+  color: #fff;
+}
+.contact h2 {
+  max-width: 18ch;
+}
+.contactDetails {
+  min-width: 0;
+  border-top: 1px solid var(--border);
+}
+.contactDetail {
+  display: grid;
+  gap: 0.5rem;
+  padding-block: 1.5rem;
+}
+.contactDetail + .contactDetail {
+  border-top: 1px solid var(--border);
+}
+.contactDetail:last-child {
+  padding-bottom: 0;
+}
+.contactDetail a {
+  text-decoration: none;
+  text-underline-offset: 4px;
+}
+.contactDetail a:hover {
+  text-decoration: underline;
+}
+
+@media (min-width: 640px) {
+  .values {
+    padding: 2.5rem;
+  }
+  .capabilityCopy {
+    padding: 1.75rem 2.5rem 2.5rem;
+  }
+  .productDrawing {
+    padding-inline: 2.5rem;
+  }
+  .compactCapability {
+    grid-template-columns: 8rem minmax(0, 1fr);
+    padding: 1.75rem;
+  }
+  .vision,
+  .contact {
+    padding: 2.5rem;
+  }
+  .visionGoals {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+    margin-top: 2.5rem;
+  }
+  .visionGoals > li {
+    display: block;
+    padding-right: 0.75rem;
+  }
+  .goalMarker {
+    position: relative;
+    margin-bottom: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid color-mix(in srgb, var(--brand) 25%, var(--border));
+  }
+  .goalMarker > span:first-child {
+    position: absolute;
+    top: -0.3rem;
+    left: 0;
+  }
+  .visionGoals > li:last-child .goalMarker {
+    border-top-color: transparent;
+  }
+}
+
+@media (min-width: 768px) {
+  .values {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+  }
+  .value {
+    padding-right: 1.75rem;
+  }
+  .value + .value {
+    padding-top: 0;
+    padding-left: 1.75rem;
+    border-top: 0;
+    border-left: 1px solid var(--border);
+  }
+  .value:last-child {
+    padding-right: 0;
+  }
+  .value h3 {
+    font-size: 1.5rem;
+  }
+  .expertiseHeader {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.75fr);
+    gap: 3rem;
+  }
+  .capabilities {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 3rem;
+  }
+  .featuredCapability .capabilityCopy {
+    flex: 1;
+  }
+  .compactCapability {
+    grid-template-columns: 6rem minmax(0, 1fr);
+    padding: 1.5rem;
+  }
+  .compactCapability h3 {
+    font-size: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .values {
+    padding: 3rem;
+  }
+  .value {
+    padding-right: 2.5rem;
+  }
+  .value + .value {
+    padding-left: 2.5rem;
+  }
+  .value h3 {
+    font-size: 1.75rem;
+  }
+  .productDrawing > svg {
+    height: 14rem;
+  }
+  .compactCapability {
+    grid-template-columns: 8rem minmax(0, 1fr);
+    padding: 2rem;
+  }
+  .compactCapability h3 {
+    font-size: 1.375rem;
+  }
+  .vision,
+  .contact {
+    padding: 3rem;
+  }
+  .visionMain {
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.85fr);
+    gap: 2rem;
+  }
+  .visionArt {
+    width: 100%;
+  }
+  .visionGoals {
+    margin-top: 3rem;
+  }
+  .contact {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: 4rem;
+  }
+  .contactDetails {
+    padding-left: 3rem;
+    border-top: 0;
+    border-left: 1px solid var(--border);
+  }
+  .contactDetail:first-child {
+    padding-top: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .productLink:hover .linkArrow {
+    transform: none;
+  }
+}

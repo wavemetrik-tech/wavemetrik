@@ -1,69 +1,352 @@
-import Image from "next/image";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { ArrowDownIcon, ArrowUpRightIcon } from "lucide-react";
+import { CtaPanel } from "@/components/cta-panel";
+import { PageFrame } from "@/components/page-frame";
+import { pillLink } from "@/lib/pill-link";
+import { pageMetadata } from "@/lib/seo";
+import { HeroLab } from "./_components/hero-lab";
+import { ProductArt, EvidenceArt } from "./_components/lab-art";
+import { approaches } from "./solutions/_data/approaches";
+import { TestMotif } from "./solutions/_components/test-motif";
+import { GUIDES } from "./resources/_data/guides";
+import { ResourceGraphic } from "./resources/_components/resource-graphic";
+import heroStyles from "./_components/home-hero.module.css";
 
+export const metadata: Metadata = pageMetadata({
+  title: "Wavemetrik | Wi-Fi test and measurement systems",
+  absolute: true,
+  description:
+    "Wi-Fi test and measurement from Wavemetrik: real-radio Wi-Fi 7 client emulators, interference generators and shielded RF test systems for repeatable lab testing.",
+  path: "/",
+});
+const instruments = [
+  {
+    id: "clients" as const,
+    name: "MT-C24",
+    category: "Real client radios",
+    title: "More clients. A clearer picture.",
+    description:
+      "Evaluate Wi-Fi performance, client loading and Wi-Fi 7 Multi-Link Operation with real radios.",
+    facts: ["24 or 48 client radios", "2×2 MIMO per radio"],
+    href: "/products/client-emulators",
+  },
+  {
+    id: "wave" as const,
+    name: "MT-Wave",
+    category: "Controlled interference",
+    title: "Bring the busy air into your lab.",
+    description:
+      "Combine Wi-Fi traffic with Bluetooth, IEEE 802.15.4, radar or noise in a repeatable test scene.",
+    facts: ["2.4, 5 & 6 GHz Wi-Fi", "Two independent radios"],
+    href: "/products/interference-generators",
+  },
+];
+// The platform's range, from the MT-SYS and MT-Wave product pages.
+const platformFacts = [
+  { label: "Client stations per system", value: "24 / 48 / 96" },
+  { label: "Wi-Fi bands", value: "2.4 / 5 / 6 GHz" },
+  { label: "Enclosure isolation", value: "Over 90 dB" },
+  { label: "Channel width", value: "Up to 320 MHz" },
+];
+const workflow = [
+  {
+    title: "Define the conditions",
+    text: "Record your device, firmware, RF paths and traffic settings.",
+  },
+  {
+    title: "Change one thing",
+    text: "Vary path loss, client load or interference against a clear baseline.",
+  },
+  {
+    title: "Keep the evidence",
+    text: "Connect the measurements with configuration and packet context.",
+  },
+  {
+    title: "Repeat on the next build",
+    text: "Return to the same conditions to understand what changed.",
+  },
+];
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <PageFrame className="home-page">
+      <div className={`home-hero-band ${heroStyles.band}`}>
+        <section
+          className={`page-hero ${heroStyles.hero}`}
+          aria-labelledby="home-heading"
+        >
+          <header className={heroStyles.masthead}>
+            <h1 id="home-heading" className={heroStyles.title}>
+              <span>Better wireless</span>
+              <span>starts in the lab.</span>
+            </h1>
+          </header>
+          <div className={heroStyles.bench}>
+            <div className={`hero-copy ${heroStyles.copy}`}>
+              <p className={heroStyles.description}>
+                Real radios. Controlled RF. Repeatable measurements. Build the
+                evidence for your next release.
+              </p>
+              <div className={heroStyles.actions}>
+                <a href="#platform" className={pillLink.primary}>
+                  Explore platform{" "}
+                  <ArrowDownIcon aria-hidden className="size-4" />
+                </a>
+                <Link href="/contact-us" className={pillLink.outline}>
+                  Talk to an engineer
+                </Link>
+              </div>
+            </div>
+            <HeroLab />
+          </div>
+          <dl className={heroStyles.specs}>
+            {platformFacts.map((spec) => (
+              <div key={spec.label}>
+                <dt>{spec.label}</dt>
+                <dd>{spec.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      </div>
+      <section
+        id="platform"
+        className="page-section"
+        aria-labelledby="platform-heading"
+      >
+        <header className="home-section-header">
+          <div>
+            <p className="eyebrow">The platform</p>
+            <h2
+              id="platform-heading"
+              className="section-heading mt-4 max-w-xl text-balance"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+              Your lab. Built around your questions.
+            </h2>
+          </div>
+          <p className="max-w-sm text-body/7 text-muted-foreground">
+            Start with the instrument you need. Build a complete system when
+            your test plan calls for more.
           </p>
+        </header>
+        <Link
+          href="/products/wifi-test-systems"
+          className="home-system-card home-product-card group"
+        >
+          <div className="home-system-copy">
+            <p className="eyebrow">Complete test systems</p>
+            <p className="mt-4 text-subhead font-semibold text-muted-foreground">
+              MT-SYS
+            </p>
+            <h3 className="mt-2 text-[clamp(1.75rem,3vw,2.25rem)]/tight font-semibold tracking-tight text-balance">
+              One environment.
+              <br />
+              Every part of the test.
+            </h3>
+            <p className="mt-5 max-w-md text-body/7 text-muted-foreground">
+              Bring shielded enclosures, client radios and programmable RF paths
+              together in a system configured for your device.
+            </p>
+            <span className="home-card-link mt-7">
+              Explore test systems{" "}
+              <ArrowUpRightIcon aria-hidden className="size-4" />
+            </span>
+          </div>
+          <div className="home-system-art">
+            <ProductArt kind="system" />
+          </div>
+        </Link>
+        <div className="mt-5 grid gap-5 md:grid-cols-2">
+          {instruments.map((product) => (
+            <Link
+              href={product.href}
+              key={product.id}
+              className="home-product-card group flex flex-col"
+            >
+              <div className="home-instrument-art">
+                <ProductArt kind={product.id} />
+              </div>
+              <div className="home-instrument-copy">
+                <p className="eyebrow">{product.category}</p>
+                <div className="mt-4 flex items-center justify-between gap-4">
+                  <h3 className="text-title-1 font-semibold tracking-tight">
+                    {product.name}
+                  </h3>
+                  <ArrowUpRightIcon
+                    aria-hidden
+                    className="home-card-arrow size-5 text-link"
+                  />
+                </div>
+                <p className="mt-3 text-title-3 font-medium tracking-tight">
+                  {product.title}
+                </p>
+                <p className="mt-3 text-body/7 text-muted-foreground">
+                  {product.description}
+                </p>
+                <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2 border-t pt-4 text-footnote/5 text-muted-foreground">
+                  {product.facts.map((fact) => (
+                    <li key={fact}>{fact}</li>
+                  ))}
+                </ul>
+              </div>
+            </Link>
+          ))}
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+      <section className="page-section" aria-labelledby="applications-heading">
+        <header className="home-section-header">
+          <div>
+            <p className="eyebrow">Applications</p>
+            <h2
+              id="applications-heading"
+              className="section-heading mt-4 text-balance"
+            >
+              Start with the question.
+            </h2>
+          </div>
+          <Link href="/solutions" className="home-text-link">
+            Explore all solutions{" "}
+            <ArrowUpRightIcon aria-hidden className="size-4" />
+          </Link>
+        </header>
+        <div className="grid gap-x-10 md:grid-cols-2">
+          {approaches.map((approach) => (
+            <Link
+              key={approach.id}
+              href={`/solutions#${approach.id}`}
+              className="home-application solution-card group"
+            >
+              <div className="min-w-0 flex-1">
+                <p className="eyebrow">{approach.category}</p>
+                <h3 className="mt-2 text-title-3/7 font-semibold tracking-tight group-hover:text-link">
+                  {approach.title}
+                </h3>
+                <p className="mt-2 text-subhead/6 text-muted-foreground">
+                  {approach.tagline}
+                </p>
+              </div>
+              <div className="home-application-motif">
+                <TestMotif kind={approach.id} />
+              </div>
+              <ArrowUpRightIcon
+                aria-hidden
+                className="home-card-arrow size-4 shrink-0 text-link"
+              />
+            </Link>
+          ))}
         </div>
-      </main>
-    </div>
+      </section>
+      <section className="page-section" aria-labelledby="evidence-heading">
+        <div className="home-evidence-grid">
+          <div className="home-evidence-art">
+            <EvidenceArt />
+            <p className="px-6 pb-6 text-center text-footnote/5 text-muted-foreground">
+              Configuration → measurement → diagnostic context
+            </p>
+          </div>
+          <div>
+            <p className="eyebrow">Built for the next build</p>
+            <h2
+              id="evidence-heading"
+              className="section-heading mt-4 max-w-lg text-balance"
+            >
+              A result you can return to.
+            </h2>
+            <p className="mt-5 text-body/7 text-muted-foreground">
+              A throughput number starts a conversation. A repeatable test helps
+              you find the answer. Keep the conditions, observations and
+              evidence connected.
+            </p>
+            <ol className="mt-7 space-y-5">
+              {workflow.map((step, index) => (
+                <li key={step.title} className="flex gap-4">
+                  <span className="home-step-number">{index + 1}</span>
+                  <div>
+                    <h3 className="text-body font-semibold">{step.title}</h3>
+                    <p className="mt-1 text-subhead/6 text-muted-foreground">
+                      {step.text}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+            <Link
+              href="/solutions#automation-and-diagnosis"
+              className="home-text-link mt-8"
+            >
+              Explore the test workflow{" "}
+              <ArrowUpRightIcon aria-hidden className="size-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+      <section className="page-section" aria-labelledby="learning-heading">
+        <header className="home-section-header">
+          <div>
+            <p className="eyebrow">From the lab</p>
+            <h2
+              id="learning-heading"
+              className="section-heading mt-4 max-w-xl text-balance"
+            >
+              A little context goes a long way.
+            </h2>
+          </div>
+          <Link href="/resources" className="home-text-link">
+            Browse resources <ArrowUpRightIcon aria-hidden className="size-4" />
+          </Link>
+        </header>
+        <div className="grid gap-5 md:grid-cols-3">
+          {GUIDES.map((guide) => (
+            <Link
+              href={`/resources/${guide.slug}`}
+              key={guide.slug}
+              className="home-guide resource-card group"
+            >
+              <div className="home-guide-art">
+                <ResourceGraphic kind={guide.graphic} />
+              </div>
+              <div className="p-6">
+                <p className="eyebrow">{guide.category}</p>
+                <h3 className="mt-3 text-title-3/7 font-semibold tracking-tight group-hover:text-link">
+                  {guide.title}
+                </h3>
+                <p className="mt-3 text-subhead/6 text-muted-foreground">
+                  {guide.intro}
+                </p>
+                <span className="home-card-link mt-6">
+                  Read the guide{" "}
+                  <ArrowUpRightIcon aria-hidden className="size-4" />
+                </span>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+      <CtaPanel
+        headingId="home-contact-heading"
+        eyebrow="Let’s build your test plan"
+        title={
+          <>
+            Bring your next device.
+            <br />
+            We’ll help build the test.
+          </>
+        }
+        actions={
+          <>
+            <Link href="/contact-us" className={pillLink.primary}>
+              Talk to our team{" "}
+              <ArrowUpRightIcon aria-hidden className="size-4" />
+            </Link>
+            <Link href="/about-us" className={pillLink.outline}>
+              Meet Wavemetrik
+            </Link>
+          </>
+        }
+      >
+        Equip your lab, automate your cases, or ask us to run the evaluation on
+        our systems.
+      </CtaPanel>
+    </PageFrame>
   );
 }
