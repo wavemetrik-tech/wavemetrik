@@ -4,8 +4,9 @@ import { ArrowUpRightIcon, CheckIcon } from "lucide-react";
 import { useState } from "react";
 import { TextField } from "@/components/form-field";
 import { pillLink } from "@/lib/pill-link";
+import { SITE } from "@/lib/site";
 
-const TO = "sales@wavemetrik.com";
+const TO = SITE.email;
 
 // The fields for asking Wavemetrik to send a document that is not published
 // on the site. Like the contact form, it prepares an email in the visitor's

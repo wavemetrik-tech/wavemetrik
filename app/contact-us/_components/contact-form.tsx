@@ -4,12 +4,14 @@ import { ArrowUpRightIcon, CheckIcon } from "lucide-react";
 import { useState } from "react";
 import { TextAreaField, TextField } from "@/components/form-field";
 import { pillLink } from "@/lib/pill-link";
+import { SITE } from "@/lib/site";
 import styles from "./contact.module.css";
 
+// Every subject goes to the same address; the subject line says which it is.
 const SUBJECTS = [
-  { label: "Product inquiry", to: "sales@wavemetrik.com" },
-  { label: "Technical support", to: "support@wavemetrik.com" },
-  { label: "General question", to: "sales@wavemetrik.com" },
+  { label: "Product inquiry", to: SITE.email },
+  { label: "Technical support", to: SITE.email },
+  { label: "General question", to: SITE.email },
 ];
 
 export function ContactForm() {

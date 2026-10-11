@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowUpRightIcon } from "lucide-react";
 
 import { pillLink } from "@/lib/pill-link";
+import { SITE } from "@/lib/site";
 import styles from "./about-sections.module.css";
 
 // Contact details from wavemetrik.com. White, underlined links stay readable
@@ -56,10 +57,10 @@ export function Contact() {
               label: "Email",
               value: (
                 <a
-                  href="mailto:sales@wavemetrik.com"
+                  href={`mailto:${SITE.email}`}
                   className={`${LINK} inline-flex items-center gap-2`}
                 >
-                  sales@wavemetrik.com
+                  {SITE.email}
                   <ArrowUpRightIcon
                     aria-hidden
                     className="size-4 shrink-0"

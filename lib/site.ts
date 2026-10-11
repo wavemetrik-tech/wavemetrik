@@ -7,8 +7,8 @@ export const SITE = {
   tagline: "Precision at every frequency.",
   description:
     "Wavemetrik builds Wi-Fi test and measurement systems: real-radio Wi-Fi 7 client emulators, interference generators and shielded RF test environments.",
-  email: "sales@wavemetrik.com",
-  supportEmail: "support@wavemetrik.com",
+  // The one address for sales and support alike.
+  email: "support@wavemetrik.com",
   phone: "+917899669501",
   address: {
     street: "Northstar, Galleria Ambedkar Colony, Yelahanka",
