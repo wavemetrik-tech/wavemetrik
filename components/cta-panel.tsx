@@ -1,5 +1,4 @@
 import { SignalRings } from "@/components/signal-rings";
-import { CtaArt } from "@/components/cta-art";
 import styles from "./cta-panel.module.css";
 
 export function CtaTile({
@@ -13,11 +12,8 @@ export function CtaTile({
     <div className={`signal-panel ${styles.panel}`} data-cta-panel>
       <SignalRings />
       <div className={styles.copy}>{children}</div>
-      <div className={styles.side}>
-        <CtaArt className={styles.art} />
-        <div className={styles.actions} data-cta-actions>
-          {actions}
-        </div>
+      <div className={styles.actions} data-cta-actions>
+        {actions}
       </div>
     </div>
   );

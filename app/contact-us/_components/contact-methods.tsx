@@ -62,19 +62,19 @@ export function ContactLocation() {
       aria-labelledby="location-heading"
       className={`page-section section-flush-top ${styles.locationSection}`}
     >
+      {/* The map runs the full width, and the address is a card on it. On a
+          phone the card stands above the map, so it does not cover it. */}
       <div className={styles.location}>
-        <div className={styles.locationCopy}>
-          <div>
-            <p className="eyebrow mb-3">Visit us</p>
-            <h2 id="location-heading" className={styles.locationTitle}>
-              Find us in Bangalore.
-            </h2>
-          </div>
+        <div className={styles.locationCard}>
+          <p className="eyebrow mb-3">Visit us</p>
+          <h2 id="location-heading" className={styles.locationTitle}>
+            Find us in Bangalore.
+          </h2>
           <address className={styles.address}>
-            <span className="block font-semibold">
+            <span className="block text-headline">
               Wavemetrik Technologies Pvt. Ltd.
             </span>
-            <span className="mt-2 block text-muted-foreground">
+            <span className="mt-1.5 block text-muted-foreground">
               Northstar, Galleria Ambedkar Colony
               <br />
               Yelahanka, Bangalore 560064
@@ -84,7 +84,7 @@ export function ContactLocation() {
             href="https://www.google.com/maps/search/?api=1&query=Northstar%20Galleria%20Ambedkar%20Colony%20Yelahanka%20Bangalore%20560064"
             target="_blank"
             rel="noopener noreferrer"
-            className={pillLink.outline}
+            className={`mt-6 ${pillLink.primary}`}
           >
             Get directions <ArrowUpRightIcon aria-hidden className="size-4" />
             <span className="sr-only"> (opens in a new tab)</span>

@@ -144,6 +144,7 @@
 .contact {
   --foreground: #fff;
   --muted-foreground: #ffffffcc;
+  --tertiary-foreground: #ffffffd9;
   --link: #fff;
   --border: #ffffff40;
   display: grid;

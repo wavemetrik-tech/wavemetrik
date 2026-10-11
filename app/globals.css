@@ -234,11 +234,19 @@
   }
   body {
     @apply bg-background text-foreground;
+    /* The header is fixed over the page, so the page starts below it. */
+    padding-top: var(--header-height);
   }
   html {
     @apply font-sans;
-    /* Links to a place on the page stop below the sticky header. */
+    --header-height: 4rem;
+    /* Links to a place on the page stop below the fixed header. */
     scroll-padding-top: 9.5rem;
+  }
+  @media (min-width: 640px) {
+    html {
+      --header-height: 4.25rem;
+    }
   }
 }
 
@@ -354,7 +362,7 @@
   }
   .product-nav {
     position: sticky;
-    top: 4rem;
+    top: var(--header-height);
     z-index: 20;
     border-block: 1px solid var(--border);
     background: color-mix(in srgb, var(--background) 94%, transparent);
@@ -591,8 +599,7 @@
   }
   .input-control:focus + .input-label,
   .input-control:not(:placeholder-shown) + .input-label,
-  .input-control:autofill + .input-label,
-  .input-field[data-filled] .input-label {
+  .input-control:autofill + .input-label {
     max-width: calc((100% - 2rem) / 0.706);
     transform: translateY(-0.5625rem) scale(0.706);
   }
@@ -613,6 +620,68 @@
   }
   .input-control:user-invalid + .input-label {
     color: var(--destructive);
+  }
+  /* Fields with no outline, as cells are on a grouped iOS form: white on a
+     grey tile, or grey (set --field-surface) on a white card. The outline
+     appears under the pointer and turns blue with the focus. */
+  .plain-fields .input-control {
+    border-color: transparent;
+    border-radius: 0.875rem;
+    background: var(--field-surface, var(--background));
+  }
+  @media (hover: hover) {
+    .plain-fields .input-control:hover {
+      border-color: color-mix(in srgb, var(--foreground) 16%, transparent);
+    }
+  }
+  .plain-fields .input-control.input-control:focus {
+    border-color: var(--primary);
+  }
+  .plain-fields .input-control.input-control:user-invalid {
+    border-color: var(--destructive);
+  }
+  /* A choice among a few options as a segmented control: a track one shade
+     darker than its surface, with the chosen segment raised. Each option is
+     a label around a visually hidden radio button. */
+  .segmented {
+    display: grid;
+    grid-auto-columns: minmax(0, 1fr);
+    grid-auto-flow: column;
+    gap: 0.25rem;
+    padding: 0.25rem;
+    border-radius: 0.875rem;
+    background: color-mix(in srgb, var(--foreground) 6%, transparent);
+  }
+  .segmented-option {
+    position: relative;
+    display: flex;
+    min-height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    padding: 0.375rem 0.5rem;
+    border-radius: 0.625rem;
+    text-align: center;
+    cursor: pointer;
+    font-size: 0.875rem;
+    line-height: 1.125rem;
+    font-weight: 500;
+    color: var(--muted-foreground);
+    transition:
+      background-color 0.25s ease,
+      box-shadow 0.25s ease,
+      color 0.25s ease;
+  }
+  .segmented-option:hover {
+    color: var(--foreground);
+  }
+  .segmented-option:has(input:checked) {
+    color: var(--foreground);
+    background: var(--segment-surface, var(--background));
+    box-shadow: 0 1px 3px color-mix(in srgb, var(--foreground) 14%, transparent);
+  }
+  .segmented-option:has(input:focus-visible) {
+    outline: 2px solid var(--link);
+    outline-offset: 2px;
   }
   .contact-method {
     padding: clamp(1.5rem, 3vw, 2rem);
@@ -658,9 +727,6 @@
     transform: translateY(0);
   }
   @media (min-width: 640px) {
-    .product-nav {
-      top: 4.5rem;
-    }
     .headline-specs > div {
       padding: 1.5rem;
     }
@@ -880,6 +946,13 @@
   .surface-panel {
     border-color: var(--muted-foreground);
   }
+  /* Outlines return on the plain fields and the chosen segment. */
+  .plain-fields .input-control {
+    border-color: var(--control-border);
+  }
+  .segmented-option:has(input:checked) {
+    box-shadow: 0 0 0 1px var(--foreground);
+  }
 }
 
 @layer components {
@@ -911,7 +984,8 @@
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .input-label {
+  .input-label,
+  .segmented-option {
     transition: none;
   }
   .solution-trace {
@@ -946,37 +1020,6 @@
 
 /* Home: a quiet editorial layout with a connected, hover-only test bench. */
 @layer components {
-  /* The hero stands on a measurement graticule that continues the header's
-     frequency scale and fades out before the first section. */
-  .home-hero-band {
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
-  }
-  .home-hero-band::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background-image:
-      linear-gradient(
-        to right,
-        color-mix(in srgb, var(--foreground) 5%, transparent) 1px,
-        transparent 1px
-      ),
-      linear-gradient(
-        to bottom,
-        color-mix(in srgb, var(--foreground) 5%, transparent) 1px,
-        transparent 1px
-      );
-    background-size: 50px 50px;
-    background-position: center top;
-    mask-image: radial-gradient(
-      ellipse 75% 95% at 72% 0%,
-      #000 25%,
-      transparent 78%
-    );
-  }
   .home-lab {
     min-width: 0;
   }
@@ -1034,7 +1077,8 @@
     gap: 0.125rem;
     padding: 0.25rem;
     border-radius: 999px;
-    background: var(--muted);
+    /* A track one shade darker than the grey tile the bench stands on. */
+    background: color-mix(in srgb, var(--foreground) 6%, transparent);
   }
   .home-lab-chip {
     min-height: 2.75rem;
@@ -1201,6 +1245,26 @@
     padding: 1.25rem 1.25rem 0;
   }
 
+  /* On a phone the four chips share the width of the bench's window; on the
+     narrowest phones they stand two by two. */
+  @media (max-width: 639px) {
+    .home-lab-chips {
+      display: flex;
+      width: 100%;
+    }
+    .home-lab-chip {
+      flex: 1 1 auto;
+      padding-inline: 0.25rem;
+      font-size: 0.75rem;
+    }
+  }
+  @media (max-width: 374px) {
+    .home-lab-chips {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-radius: 1.25rem;
+    }
+  }
   @media (min-width: 640px) {
     .home-lab-chip {
       min-height: 2.25rem;
@@ -1297,5 +1361,94 @@
       transition: none;
       transform: none !important;
     }
+  }
+}
+
+/* Smooth scrolling (components/smooth-scroll.tsx). Lenis eases the wheel, so
+   the browser's own smooth scrolling is switched off while it runs. Lenis's
+   stylesheet is not imported: it also disables pointer events on iframes,
+   which would lock the map on the contact page. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+html.lenis {
+  scroll-behavior: auto;
+}
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+.lenis.lenis-autoToggle {
+  transition-property: overflow;
+  transition-duration: 1ms;
+  transition-behavior: allow-discrete;
+}
+
+/* Page transitions (components/page-frame.tsx). The page being left fades
+   out quickly; the next one waits for it, then fades in while rising a few
+   pixels. The pause between them is short enough to read as one movement.
+   Leaving is faster than arriving, so a click feels answered at once. */
+::view-transition-old(.page-exit) {
+  animation: 180ms cubic-bezier(0.4, 0, 1, 1) both page-fade-out;
+}
+::view-transition-new(.page-enter) {
+  animation: 520ms cubic-bezier(0.16, 1, 0.3, 1) 140ms both page-rise-in;
+}
+/* The live page under the transition still takes clicks. */
+::view-transition {
+  pointer-events: none;
+}
+@keyframes page-fade-out {
+  to {
+    opacity: 0;
+    translate: 0 -8px;
+  }
+}
+@keyframes page-rise-in {
+  from {
+    opacity: 0;
+    translate: 0 16px;
+  }
+}
+
+/* Movement tied to the scroll position itself, where the browser supports
+   it: it runs off the main thread and stays exactly in step with the page. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* A closing panel grows the last few percent into place as it comes up
+       the window. It animates `scale`, so it does not disturb the fade and
+       rise the panel arrives with, which use `transform`. */
+    [data-cta-panel] {
+      animation: scroll-settle linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 30%;
+    }
+    /* The landing page's bench lags a little behind the page as the hero
+       leaves, which gives the drawing some depth. */
+    .home-page .home-lab-stage {
+      animation: scroll-lag linear both;
+      animation-timeline: view();
+      animation-range: exit 0% exit 100%;
+    }
+  }
+}
+@keyframes scroll-settle {
+  from {
+    scale: 0.94;
+  }
+}
+@keyframes scroll-lag {
+  to {
+    translate: 0 2.5rem;
+  }
+}
+
+/* With Reduce Motion on, one page replaces another without fade or rise. */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
   }
 }

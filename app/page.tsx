@@ -6,12 +6,12 @@ import { PageFrame } from "@/components/page-frame";
 import { pillLink } from "@/lib/pill-link";
 import { pageMetadata } from "@/lib/seo";
 import { HeroLab } from "./_components/hero-lab";
+import heroStyles from "./_components/home-hero.module.css";
 import { ProductArt, EvidenceArt } from "./_components/lab-art";
 import { approaches } from "./solutions/_data/approaches";
 import { TestMotif } from "./solutions/_components/test-motif";
 import { GUIDES } from "./resources/_data/guides";
 import { ResourceGraphic } from "./resources/_components/resource-graphic";
-import heroStyles from "./_components/home-hero.module.css";
 
 export const metadata: Metadata = pageMetadata({
   title: "Wavemetrik | Wi-Fi test and measurement systems",
@@ -42,13 +42,6 @@ const instruments = [
     href: "/products/interference-generators",
   },
 ];
-// The platform's range, from the MT-SYS and MT-Wave product pages.
-const platformFacts = [
-  { label: "Client stations per system", value: "24 / 48 / 96" },
-  { label: "Wi-Fi bands", value: "2.4 / 5 / 6 GHz" },
-  { label: "Enclosure isolation", value: "Over 90 dB" },
-  { label: "Channel width", value: "Up to 320 MHz" },
-];
 const workflow = [
   {
     title: "Define the conditions",
@@ -70,7 +63,9 @@ const workflow = [
 export default function Home() {
   return (
     <PageFrame className="home-page">
-      <div className={`home-hero-band ${heroStyles.band}`}>
+      {/* The landing hero: the statement across the top, and the test bench
+          drawn large on the page under it. */}
+      <div className={heroStyles.band}>
         <section
           className={`page-hero ${heroStyles.hero}`}
           aria-labelledby="home-heading"
@@ -80,8 +75,6 @@ export default function Home() {
               <span>Better wireless</span>
               <span>starts in the lab.</span>
             </h1>
-          </header>
-          <div className={heroStyles.bench}>
             <div className={`hero-copy ${heroStyles.copy}`}>
               <p className={heroStyles.description}>
                 Real radios. Controlled RF. Repeatable measurements. Build the
@@ -89,7 +82,7 @@ export default function Home() {
               </p>
               <div className={heroStyles.actions}>
                 <a href="#platform" className={pillLink.primary}>
-                  Explore platform{" "}
+                  Explore platform
                   <ArrowDownIcon aria-hidden className="size-4" />
                 </a>
                 <Link href="/contact-us" className={pillLink.outline}>
@@ -97,16 +90,10 @@ export default function Home() {
                 </Link>
               </div>
             </div>
+          </header>
+          <div className={`hero-art ${heroStyles.bench}`}>
             <HeroLab />
           </div>
-          <dl className={heroStyles.specs}>
-            {platformFacts.map((spec) => (
-              <div key={spec.label}>
-                <dt>{spec.label}</dt>
-                <dd>{spec.value}</dd>
-              </div>
-            ))}
-          </dl>
         </section>
       </div>
       <section
@@ -327,9 +314,8 @@ export default function Home() {
         eyebrow="Let’s build your test plan"
         title={
           <>
-            Bring your next device.
-            <br />
-            We’ll help build the test.
+            <span className="block">Bring your next device.</span>
+            <span className="block">We’ll help build the test.</span>
           </>
         }
         actions={

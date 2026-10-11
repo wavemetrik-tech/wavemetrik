@@ -2,7 +2,6 @@ import Link from "next/link";
 import { ArrowUpRightIcon } from "lucide-react";
 
 import { pillLink } from "@/lib/pill-link";
-import { CtaArt } from "@/components/cta-art";
 import styles from "./about-sections.module.css";
 
 // Contact details from wavemetrik.com. White, underlined links stay readable
@@ -28,7 +27,7 @@ export function Contact() {
             something extraordinary together. If you’re interested in working
             with us, we’d love to discuss how we can bring your ideas to life.
           </p>
-          <div className="mt-6 flex flex-wrap items-center gap-4 sm:mt-8">
+          <div className="mt-6 sm:mt-8">
             <Link href="/contact-us" className={pillLink.inverse}>
               Get in touch
               <ArrowUpRightIcon
@@ -37,7 +36,6 @@ export function Contact() {
                 strokeWidth={1.5}
               />
             </Link>
-            <CtaArt className="hidden w-36 text-white/65 sm:block" />
           </div>
         </div>
 

@@ -44,16 +44,19 @@ export function ContactForm() {
   }
 
   return (
-    <section aria-labelledby="message-heading" className={styles.form}>
+    <section
+      aria-labelledby="message-heading"
+      className={`plain-fields ${styles.form}`}
+    >
       <h2 id="message-heading" className={styles.formTitle}>
         How can we help?
       </h2>
       <form onSubmit={handleSubmit} className={styles.fields}>
         <fieldset className="min-w-0">
           <legend className={styles.formLabel}>I’d like to discuss</legend>
-          <div className={styles.choices}>
+          <div className="segmented">
             {SUBJECTS.map((subject, index) => (
-              <label key={subject.label} className={styles.choice}>
+              <label key={subject.label} className="segmented-option">
                 <input
                   className="sr-only"
                   type="radio"

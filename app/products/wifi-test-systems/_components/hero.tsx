@@ -1,6 +1,7 @@
 import { ArrowDownIcon } from "lucide-react";
 import Link from "next/link";
 
+import { DatasheetRequest } from "@/components/datasheet-request";
 import { HeadlineSpecs } from "@/components/headline-specs";
 import { pillLink } from "@/lib/pill-link";
 
@@ -33,11 +34,17 @@ export function Hero() {
             <Link href="/contact-us" className={pillLink.primary}>
               Contact sales
             </Link>
-            <a href="#system-configurations" className={pillLink.outline}>
-              See configurations
-              <ArrowDownIcon aria-hidden className="size-[1.125rem]" />
-            </a>
+            <DatasheetRequest
+              label="Request datasheet"
+              product="MT-SYS"
+              className={pillLink.outline}
+            />
           </div>
+          {/* The way down the page is a quieter link under the two actions. */}
+          <a href="#system-configurations" className="mt-3 inline-flex min-h-11 items-center gap-1.5 rounded-sm text-subhead font-medium text-link underline-offset-4 outline-none hover:underline focus-visible:ring-2 focus-visible:ring-ring">
+            See configurations
+            <ArrowDownIcon aria-hidden className="size-4" />
+          </a>
         </div>
 
         <SystemScene />

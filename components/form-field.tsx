@@ -1,4 +1,3 @@
-import { ChevronsUpDownIcon } from "lucide-react";
 import { useId } from "react";
 
 // Form fields in the manner of Apple's web forms: a tall rounded field whose
@@ -37,33 +36,6 @@ export function TextField({
       <FieldLabel htmlFor={id} optional={optional}>
         {label}
       </FieldLabel>
-    </div>
-  );
-}
-
-export function SelectField({
-  label,
-  options,
-  className = "",
-  ...props
-}: {
-  label: string;
-  options: readonly string[];
-} & React.ComponentProps<"select">) {
-  const id = useId();
-  return (
-    // A select always shows a value, so its label stays at the top.
-    <div className={`input-field ${className}`} data-filled>
-      <select id={id} {...props} className="input-control cursor-pointer pr-10">
-        {options.map((option) => (
-          <option key={option}>{option}</option>
-        ))}
-      </select>
-      <FieldLabel htmlFor={id}>{label}</FieldLabel>
-      <ChevronsUpDownIcon
-        aria-hidden
-        className="pointer-events-none absolute top-1/2 right-3.5 size-4 -translate-y-1/2 text-muted-foreground"
-      />
     </div>
   );
 }

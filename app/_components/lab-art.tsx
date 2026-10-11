@@ -292,11 +292,25 @@ export function Laptop({ live = false }: { live?: boolean }) {
     </g>
   );
 }
-export function ProductArt({ kind }: { kind: "system" | "clients" | "wave" }) {
+// `bare` draws the bench without its lettering and frames it closely, for
+// small sizes such as the header's Products panel.
+export function ProductArt({
+  kind,
+  bare = false,
+}: {
+  kind: "system" | "clients" | "wave";
+  bare?: boolean;
+}) {
   return (
     <svg
       aria-hidden
-      viewBox={kind === "system" ? "0 0 600 390" : "0 0 540 280"}
+      viewBox={
+        kind !== "system"
+          ? "0 0 540 280"
+          : bare
+            ? "30 30 490 340"
+            : "0 0 600 390"
+      }
       className="home-product-svg"
       fill="none"
       strokeWidth={1.6}
@@ -319,13 +333,13 @@ export function ProductArt({ kind }: { kind: "system" | "clients" | "wave" }) {
           />
           <g className="home-hardware">
             <g transform="translate(225 62)">
-              <Chamber />
+              <Chamber bare={bare} />
             </g>
             <g transform="translate(46 242) scale(.8)">
-              <WaveHardware />
+              <WaveHardware bare={bare} />
             </g>
             <g transform="translate(225 300) scale(.72)">
-              <ClientHardware />
+              <ClientHardware bare={bare} />
             </g>
           </g>
           <Attenuator x={490} y={250} vertical />

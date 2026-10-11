@@ -3,7 +3,7 @@ import { RequestForm } from "@/components/request-form";
 // The presentation is not published; it is sent to people who ask for it.
 export function PresentationRequestForm() {
   return (
-    <div className="flex min-w-0 flex-col gap-5 rounded-2xl bg-background p-6 sm:p-7">
+    <div className="flex min-w-0 flex-col gap-5 rounded-2xl bg-background p-6 [--field-surface:var(--muted)] sm:p-7">
       <div>
         <h3 className="text-title-3 font-semibold">Request the presentation</h3>
         <p className="mt-1.5 text-subhead/[1.375rem] text-pretty text-muted-foreground">

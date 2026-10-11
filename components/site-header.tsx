@@ -16,8 +16,7 @@ import {
 import { FrequencyScale } from "@/components/frequency-scale";
 import { Logo } from "@/components/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { CtaArt } from "@/components/cta-art";
-import { pillLink } from "@/lib/pill-link";
+import { ProductArt } from "@/app/_components/lab-art";
 import styles from "./site-header.module.css";
 
 const PRODUCTS: {
@@ -77,8 +76,9 @@ function focusWhenVisible(target: () => HTMLElement | undefined | null) {
   return () => cancelAnimationFrame(frame);
 }
 
-// One product in the flyout: its line drawing, which is outlined while the
-// link is pointed at or focused, with its name and what it is.
+// One product in the flyout: a tile with its line drawing on a white plate,
+// outlined while the link is pointed at or focused, beside its name and what
+// it is.
 function ProductCard({
   product,
   onNavigate,
@@ -289,6 +289,7 @@ export function SiteHeader() {
       <header
         ref={headerRef}
         className={styles.header}
+        data-open={menuOpen}
         onBlur={(event) => {
           // Tabbing out of the header closes the flyout.
           if (!event.currentTarget.contains(event.relatedTarget)) {
@@ -391,7 +392,7 @@ export function SiteHeader() {
             <Link
               href="/contact-us"
               onClick={closeAll}
-              className={`hidden! whitespace-nowrap px-4! py-2! text-subhead! lg:inline-flex! ${pillLink.primary}`}
+              className={styles.contact}
             >
               Contact sales{" "}
               <ArrowUpRightIcon
@@ -437,8 +438,8 @@ export function SiteHeader() {
           </div>
         </div>
 
-        {/* The Products flyout: the bar's own surface carried down the page,
-            with the three instruments drawn in it. */}
+        {/* The Products flyout: a panel under the bar with the brand card
+            and a tile for each of the three instruments. */}
         <div
           id={flyoutId}
           inert={!flyoutOpen}
@@ -448,11 +449,15 @@ export function SiteHeader() {
         >
           <div className={styles.flyoutPanel}>
             <div className={styles.intro}>
-              <p className="text-caption-1 font-medium text-white/65">
+              <p className="text-caption-1 font-medium text-white/85">
                 The Wavemetrik toolkit
               </p>
               <h2>Build your wireless test bench.</h2>
-              <CtaArt className={styles.introArt} />
+              {/* The bench itself: the three instruments on the right, wired
+                  together and drawn in white on the blue. */}
+              <div className={styles.introArt}>
+                <ProductArt kind="system" bare />
+              </div>
               <Link
                 href="/products"
                 onClick={closeAll}
@@ -481,7 +486,7 @@ export function SiteHeader() {
           id={menuId}
           ref={mobileMenu}
           inert={!menuOpen}
-          className={`${styles.mobileMenu} absolute inset-x-0 top-full h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain bg-background px-5 pt-6 pb-10 sm:h-[calc(100dvh-4.5rem)] sm:px-8 lg:hidden ${FADE} ${
+          className={`${styles.mobileMenu} absolute inset-x-0 overflow-y-auto overscroll-contain bg-background px-5 pt-6 pb-10 sm:px-8 lg:hidden ${FADE} ${
             menuOpen
               ? "visible translate-y-0 opacity-100"
               : "pointer-events-none invisible -translate-y-1 opacity-0"

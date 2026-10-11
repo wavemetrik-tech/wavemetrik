@@ -9,6 +9,11 @@
   background: var(--brand);
   color: #fff;
 }
+/* Beside a heading with a paragraph under it, the actions line up with the
+   paragraph; beside a heading alone they are centered on it. */
+.panel:has(.description) {
+  align-items: end;
+}
 .panel > svg {
   opacity: 0.35;
 }
@@ -24,20 +29,13 @@
   line-height: 1.75rem;
   text-wrap: pretty;
 }
+/* 85% white is 5.4:1 on the brand blue; the label is small, so it needs
+   4.5:1. */
 .eyebrow {
-  color: #ffffffb3;
-}
-.side {
-  position: relative;
-  min-width: 0;
-}
-.art {
-  width: 15rem;
-  max-width: 100%;
-  margin: -1.5rem auto 0;
-  color: #ffffffa6;
+  color: #ffffffd9;
 }
 .actions {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -51,14 +49,16 @@
 .actions > :first-child:hover {
   background: #eaf2fc;
 }
+/* The second action is the same size as the first and quieter in style: a
+   translucent fill with no outline. */
 .actions > :not(:first-child) {
-  background: #ffffff0a;
-  border: 1px solid #ffffff66;
+  background: #ffffff1f;
+  border-color: transparent;
   color: #fff;
 }
 .actions > :not(:first-child):hover {
-  background: #ffffff1a;
-  border-color: #ffffffb3;
+  background: #ffffff2b;
+  border-color: transparent;
 }
 .actions > :focus-visible {
   outline: 2px solid #fff;
@@ -70,25 +70,16 @@
     padding: 2.5rem;
   }
 }
+/* On a wide screen the actions stand at the panel's bottom right, level with
+   the last line of the text. */
 @media (min-width: 1024px) {
   .panel {
-    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) auto;
     gap: 3rem;
     padding: 3.5rem;
   }
-  .art {
-    width: 18rem;
-    margin: -1.25rem auto 0.5rem;
-  }
-  .actions {
-    justify-content: center;
-  }
-  .actions > * {
-    flex-grow: 1;
-  }
-}
-@media (max-width: 639px) {
-  .art {
-    display: none;
+  .description {
+    max-width: 35rem;
+    font-size: 1.1875rem;
   }
 }

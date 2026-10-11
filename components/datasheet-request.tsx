@@ -22,7 +22,8 @@ export function DatasheetRequest({
   className,
   align = "start",
 }: {
-  label: string;
+  // Text, or richer content when the button is drawn as a card.
+  label: React.ReactNode;
   product?: (typeof PRODUCTS)[number];
   className: string;
   align?: "start" | "end";
@@ -57,7 +58,7 @@ export function DatasheetRequest({
         sideOffset={10}
         collisionPadding={12}
         collisionAvoidance={{ side: "none", align: "shift" }}
-        className="w-[min(27rem,calc(100vw-1.5rem))] scroll-mb-4 gap-5 rounded-[1.25rem] p-5 text-[1rem] shadow-[0_20px_60px_-16px_rgb(0_0_0/0.3)] ring-foreground/8 duration-200 sm:p-6"
+        className="w-[min(27rem,calc(100vw-1.5rem))] scroll-mb-4 gap-5 rounded-[1.5rem] bg-muted p-5 text-[1rem] shadow-[0_20px_60px_-16px_rgb(0_0_0/0.3)] ring-foreground/8 duration-200 sm:p-7"
       >
         <PopoverHeader className="gap-1">
           <PopoverTitle className="text-[1.375rem]/[1.75rem] font-semibold tracking-tight">

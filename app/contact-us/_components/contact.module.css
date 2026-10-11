@@ -1,33 +1,12 @@
+/* The top padding comes from the page, and matches the heroes that open on
+   a tile. */
 .page {
-  padding-top: clamp(1.5rem, 3svh, 2rem);
   padding-bottom: 3rem;
-}
-.intro {
-  display: grid;
-  align-items: end;
-  gap: 1.25rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid var(--surface-outline);
-}
-.title {
-  margin-top: 0.75rem;
-  font-size: clamp(2.75rem, 4.8vw, 4rem);
-  line-height: 1;
-  font-weight: 550;
-  letter-spacing: -0.05em;
-}
-.lead {
-  max-width: 26rem;
-  color: var(--muted-foreground);
-  font-size: 1rem;
-  line-height: 1.625rem;
-  text-wrap: pretty;
 }
 .workspace {
   display: grid;
   align-items: start;
   gap: 2.5rem;
-  padding-top: 1.5rem;
 }
 .direct {
   min-width: 0;
@@ -91,68 +70,33 @@
   text-decoration: underline;
   text-underline-offset: 0.25rem;
 }
+/* The form stands on a grey tile, with plain white fields (`plain-fields`)
+   and a segmented control for the subject (`segmented`), both from
+   globals.css. */
 .form {
   grid-row: 1;
   min-width: 0;
   padding: 1.5rem;
-  border: 1px solid var(--surface-outline);
-  border-radius: 1.5rem;
+  border-radius: 1.75rem;
   background: var(--muted);
 }
 .formTitle {
-  font-size: 1.5rem;
-  line-height: 1.2;
-  font-weight: 550;
+  font-size: 1.75rem;
+  line-height: 2.125rem;
+  font-weight: 600;
   letter-spacing: -0.03em;
 }
 .fields {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  margin-top: 1.25rem;
+  gap: 1.25rem;
+  margin-top: 1.5rem;
 }
 .formLabel {
   margin-bottom: 0.625rem;
   font-size: 0.8125rem;
   font-weight: 500;
   color: var(--muted-foreground);
-}
-.choices {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.5rem;
-}
-.choice {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 2.75rem;
-  padding: 0.5rem;
-  border: 1px solid var(--control-border);
-  border-radius: 0.625rem;
-  background: var(--background);
-  text-align: center;
-  cursor: pointer;
-  font-size: 0.8125rem;
-  line-height: 1.125rem;
-  color: var(--muted-foreground);
-  transition:
-    background-color 250ms ease,
-    border-color 250ms ease,
-    color 250ms ease;
-}
-.choice:has(input:checked) {
-  color: var(--link);
-  background: color-mix(in srgb, var(--brand) 6%, var(--background));
-  border-color: var(--link);
-}
-.choice:has(input:focus-visible) {
-  outline: 2px solid var(--link);
-  outline-offset: 3px;
-}
-.choice:hover {
-  border-color: var(--link);
 }
 .details {
   display: grid;
@@ -167,8 +111,6 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 0.75rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--surface-outline);
 }
 .status:empty {
   display: none;
@@ -176,56 +118,81 @@
 .locationSection {
   padding-bottom: 3rem;
 }
+/* The map runs the full width with the address card on it. On a narrow
+   screen the card is a grey tile above the map. */
 .location {
-  border-top: 1px solid var(--surface-outline);
-  padding-top: 2rem;
-}
-.locationCopy {
+  position: relative;
   display: grid;
-  gap: 1.5rem;
-  align-items: center;
-  padding-bottom: 1.75rem;
+  gap: 1rem;
+}
+.locationCard {
+  min-width: 0;
+  padding: 1.5rem;
+  border-radius: 1.75rem;
+  background: var(--muted);
 }
 .locationTitle {
-  font-size: clamp(1.5rem, 2.5vw, 2rem);
-  line-height: 1.15;
-  font-weight: 550;
-  letter-spacing: -0.035em;
+  font-size: 1.75rem;
+  line-height: 2.125rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
 }
 .address {
-  font-size: 0.875rem;
-  line-height: 1.5rem;
+  margin-top: 1.25rem;
+  font-size: 1.0625rem;
+  line-height: 1.625rem;
   font-style: normal;
 }
 .map {
+  position: relative;
+  height: 22rem;
   overflow: hidden;
-  border: 1px solid var(--surface-outline);
-  border-radius: 1.25rem;
+  border-radius: 1.75rem;
   background: var(--muted);
 }
 .map iframe {
-  display: block;
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: clamp(18rem, 45svh, 25rem);
+  height: 100%;
   border: 0;
   color-scheme: light;
 }
+/* From tablet width the card floats at the map's top left, in the page's
+   own surface color with a soft shadow. */
+@media (min-width: 768px) {
+  .locationCard {
+    position: absolute;
+    top: 1.25rem;
+    left: 1.25rem;
+    z-index: 1;
+    width: 23rem;
+    padding: 1.75rem;
+    border-radius: 1.5rem;
+    background: var(--background);
+    box-shadow: 0 1.25rem 3rem -1rem #00000047;
+  }
+  .map {
+    height: clamp(27rem, 62svh, 32rem);
+  }
+  /* The embed puts its own place card or "Open in Maps" label at its top
+     left, which would show from under this card. The top strip of the embed
+     is cut off instead; the card's button does the same job. */
+  .map iframe {
+    top: -7rem;
+    height: calc(100% + 7rem);
+  }
+}
 @media (min-width: 640px) {
-  .intro {
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
+  .form {
+    padding: 2rem;
   }
   .details {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
   .details :global(.input-label) {
     font-size: 0.9375rem;
-  }
-  .locationCopy {
-    grid-template-columns: 1fr 1fr;
-  }
-  .locationCopy > a {
-    justify-self: start;
   }
 }
 @media (min-width: 1024px) {
@@ -240,14 +207,10 @@
   }
   .form {
     grid-column: 2;
-  }
-  .locationCopy {
-    grid-template-columns: 1fr 1fr auto;
-    gap: 2rem;
+    padding: 2.5rem;
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .choice,
   .directRow,
   .directArrow {
     transition: none;

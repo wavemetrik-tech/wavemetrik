@@ -20,23 +20,16 @@ export default function ContactUsPage() {
   return (
     <PageFrame className="contact-page">
       <JsonLd data={breadcrumbSchema([["Contact", PAGE.path]])} />
+      {/* The page opens on the form and the direct contacts. Its title is
+          for search engines and screen readers only. */}
       <section
         id="hero"
         aria-labelledby="hero-heading"
-        className={`page-hero ${styles.page}`}
+        className={`page-hero pt-8 sm:pt-12 lg:pt-16 ${styles.page}`}
       >
-        <header className={styles.intro}>
-          <div>
-            <p className="eyebrow">Contact Wavemetrik</p>
-            <h1 id="hero-heading" className={styles.title}>
-              Let’s talk.
-            </h1>
-          </div>
-          <p className={styles.lead}>
-            A product question, a testing challenge, or a new idea. Start a
-            conversation with the people who build your test systems.
-          </p>
-        </header>
+        <h1 id="hero-heading" className="sr-only">
+          Contact Wavemetrik
+        </h1>
         <div className={styles.workspace}>
           <ContactMethods />
           <ContactForm />

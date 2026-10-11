@@ -2,7 +2,7 @@
 
 import { ArrowUpRightIcon, CheckIcon } from "lucide-react";
 import { useState } from "react";
-import { SelectField, TextField } from "@/components/form-field";
+import { TextField } from "@/components/form-field";
 import { pillLink } from "@/lib/pill-link";
 
 const TO = "sales@wavemetrik.com";
@@ -25,8 +25,7 @@ export function RequestForm({
   defaultProduct?: string;
   interest?: boolean;
   submitLabel: string;
-  // For a dropdown: the first two fields share a row and the button fills
-  // the width.
+  // For a dropdown: the button fills the width and its note is centered.
   compact?: boolean;
 }) {
   const [prepared, setPrepared] = useState(false);
@@ -57,15 +56,28 @@ export function RequestForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className={`grid min-w-0 gap-3 ${compact ? "sm:grid-cols-2" : ""}`}
+      className="plain-fields grid min-w-0 gap-3"
     >
       {products && (
-        <SelectField
-          label="Product"
-          name="product"
-          options={products}
-          defaultValue={defaultProduct ?? products[0]}
-        />
+        <fieldset className="mb-2 min-w-0">
+          <legend className="mb-2.5 text-footnote font-medium text-muted-foreground">
+            Product
+          </legend>
+          <div className="segmented">
+            {products.map((product) => (
+              <label key={product} className="segmented-option">
+                <input
+                  className="sr-only"
+                  type="radio"
+                  name="product"
+                  value={product}
+                  defaultChecked={product === (defaultProduct ?? products[0])}
+                />
+                <span>{product}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
       )}
       <TextField
         label="Full name"

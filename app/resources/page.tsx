@@ -45,6 +45,10 @@ const sections = [
   },
 ];
 
+// A document card: its name and a line about it, with a round chip at the end.
+const DOCUMENT_CARD =
+  "flex min-h-24 items-center justify-between gap-5 rounded-2xl bg-background p-5 outline-none focus-visible:ring-2 focus-visible:ring-ring sm:px-6";
+
 export default function ResourcesPage() {
   return (
     <PageFrame className="resources-page">
@@ -117,7 +121,7 @@ export default function ResourcesPage() {
         aria-labelledby="documentation-heading"
         className="page-section section-flush-top"
       >
-        <div className="grid items-start gap-x-14 gap-y-8 rounded-3xl bg-muted p-6 sm:p-9 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:p-10">
+        <div className="grid items-center gap-x-14 gap-y-8 rounded-3xl bg-muted p-6 sm:p-9 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:p-10">
           <header>
             <p className="eyebrow">Product documentation</p>
             <h2
@@ -132,20 +136,44 @@ export default function ResourcesPage() {
               limitations.
             </p>
           </header>
-          <div className="divide-y border-y">
-            <Link
-              href="/products/interference-generators#wifi-interference"
-              className="flex min-h-20 items-center justify-between gap-4 py-4 text-subhead font-medium text-link underline-offset-4 hover:underline"
-            >
-              Read MT-Wave specifications
-              <ArrowUpRightIcon aria-hidden className="size-4 shrink-0" />
-            </Link>
-            <DatasheetRequest
-              label="Request a product datasheet"
-              align="end"
-              className="flex min-h-20 w-full items-center justify-between gap-4 py-4 text-left text-subhead font-medium text-link underline-offset-4 outline-none hover:underline focus-visible:ring-2 focus-visible:ring-ring"
-            />
-          </div>
+          {/* The two ways to the documents, as white cards on the tile. The
+              round chip at the end of each turns blue under the pointer. */}
+          <ul className="grid gap-3">
+            <li>
+              <Link
+                href="/products/interference-generators#wifi-interference"
+                className={`group ${DOCUMENT_CARD}`}
+              >
+                <span className="min-w-0">
+                  <span className="block text-headline">
+                    Read MT-Wave specifications
+                  </span>
+                  <span className="mt-1 block text-subhead/[1.375rem] text-muted-foreground">
+                    Listed in full on the MT-Wave product page.
+                  </span>
+                </span>
+                <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-muted text-link transition-colors duration-200 group-hover:bg-primary group-hover:text-primary-foreground motion-reduce:transition-none">
+                  <ArrowUpRightIcon aria-hidden className="size-4" />
+                </span>
+              </Link>
+            </li>
+            <li>
+              <DatasheetRequest
+                label={
+                  <span className="min-w-0">
+                    <span className="block text-headline">
+                      Request a product datasheet
+                    </span>
+                    <span className="mt-1 block text-subhead/[1.375rem] text-muted-foreground">
+                      Choose a product and we’ll send it to you.
+                    </span>
+                  </span>
+                }
+                align="end"
+                className={`w-full text-left ${DOCUMENT_CARD} [&>svg]:box-content [&>svg]:rounded-full [&>svg]:bg-muted [&>svg]:p-[0.6875rem] [&>svg]:text-link [&>svg]:transition-[rotate,background-color,color] hover:[&>svg]:bg-primary hover:[&>svg]:text-primary-foreground`}
+              />
+            </li>
+          </ul>
         </div>
       </section>
     </PageFrame>
