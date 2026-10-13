@@ -12,11 +12,12 @@ const PAGE = {
 export const metadata: Metadata = pageMetadata(PAGE);
 
 // Each statement here describes what the site does today: PostHog analytics
-// in cookieless mode (`lib/posthog.ts`), the events sent from the forms, and
+// in cookieless mode (`lib/posthog.ts`), the forms that are emailed to us
+// through Resend (`lib/send-enquiry.ts`), the events sent from the forms, and
 // the map on the contact page. A change to the site that collects more or
-// differently (another analytics or embedded service, a form that posts to a
-// server, a new event property) needs a matching change to this text and to
-// `updated`.
+// differently (another analytics or embedded service, a form that stores
+// what it is sent or sends it somewhere else, a new event property) needs a
+// matching change to this text and to `updated`.
 const SECTIONS: PolicySection[] = [
   {
     title: "Who we are",
@@ -28,8 +29,8 @@ const SECTIONS: PolicySection[] = [
   {
     title: "Information you send us",
     blocks: [
-      "The forms on this website (the contact form and the requests for a datasheet or the technical presentation) do not send what you type to our servers or to our analytics provider. They prepare an email in your own email app, which you can read and change before you send it.",
-      "When you email or call us, we receive what you choose to share. This usually includes:",
+      "The forms on this website (the contact form and the requests for a datasheet or the technical presentation) send what you type to us by email. When you submit one, the website passes it to Resend, an email delivery service, which delivers it to our mailbox. The website itself does not keep a copy, and none of it is sent to our analytics provider. Resend keeps a record of the emails it delivers for a limited period.",
+      "When you use a form, email us or call us, we receive what you choose to share. This usually includes:",
       [
         "Your name, work email address and company",
         "Your phone number, if you call us or include it",
@@ -57,7 +58,7 @@ const SECTIONS: PolicySection[] = [
       [
         "The pages you view, the links and buttons you use, and the page that referred you",
         "Your browser, device type, screen size and language, and how quickly pages load",
-        "That you opened one of our request forms or prepared an email with one, together with the kind of enquiry, document or product chosen. What you type into a form, including your name, email address and message, is not collected",
+        "That you opened one of our request forms or sent a form, together with the kind of enquiry, document or product chosen. What you type into a form, including your name, email address and message, is not collected",
         "Errors that occur in your browser while you use the site, and a small number of diagnostic messages",
       ],
       "To count visits without identifying anyone, PostHog’s servers turn your IP address and browser type into an anonymous code that changes every day. The code cannot be turned back into your IP address, and we do not use your IP address to work out where you are. We do not link this information to your name or contact details, and we do not use it for advertising.",
@@ -90,7 +91,7 @@ const SECTIONS: PolicySection[] = [
     blocks: [
       "We share personal information only where there is a reason to:",
       [
-        "With service providers that host this website, provide its analytics and run our email and business systems, who handle it on our behalf",
+        "With service providers that host this website, provide its analytics, deliver the email from its forms and run our email and business systems, who handle it on our behalf",
         "With our professional advisers, such as lawyers and auditors, where needed",
         "With courts, regulators or authorities, where the law requires it",
         "With a successor to our business, if Wavemetrik is merged, acquired or reorganised",
@@ -101,7 +102,7 @@ const SECTIONS: PolicySection[] = [
   {
     title: "Where information is processed",
     blocks: [
-      "Wavemetrik is based in India. Our service providers, including our hosting provider, our analytics provider and Google, may process information in other countries, including the United States and countries in the European Union. Where information is transferred across borders, we do so in line with the law that applies.",
+      "Wavemetrik is based in India. Our service providers, including our hosting provider, our analytics provider, our email delivery provider and Google, may process information in other countries, including the United States and countries in the European Union. Where information is transferred across borders, we do so in line with the law that applies.",
     ],
   },
   {
@@ -149,8 +150,8 @@ export default function PrivacyPolicyPage() {
     <PolicyPage
       title={PAGE.title}
       path={PAGE.path}
-      updated="11 October 2026"
-      summary="This policy explains what information we receive when you visit this website or contact us, and what we do with it. In short: the site sets no cookies of its own, we use one cookieless analytics service to see how it is used, we do not use advertising, and what you type into our forms is not sent from the page."
+      updated="13 October 2026"
+      summary="This policy explains what information we receive when you visit this website or contact us, and what we do with it. In short: the site sets no cookies of its own, we use one cookieless analytics service to see how it is used, we do not use advertising, and what you type into our forms is sent only to us, by email."
       sections={SECTIONS}
       related={{ label: "Read the Terms & Conditions", href: "/terms-conditions" }}
     />

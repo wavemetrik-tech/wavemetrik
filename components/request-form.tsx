@@ -1,20 +1,26 @@
 "use client";
 
-import { ArrowUpRightIcon, CheckIcon } from "lucide-react";
-import { useState } from "react";
-import { TextField } from "@/components/form-field";
+import { ArrowUpRightIcon } from "lucide-react";
+import { useState, useTransition } from "react";
+import {
+  FormNotice,
+  Honeypot,
+  PhoneField,
+  TextField,
+} from "@/components/form-field";
 import { pillLink } from "@/lib/pill-link";
 import { capture } from "@/lib/posthog";
 import { posthogLog } from "@/lib/posthog-log";
+import { sendEnquiry } from "@/lib/send-enquiry";
 import { SITE } from "@/lib/site";
 
-// Requests from every form go to the support address.
+// Shown if a request cannot be sent; requests themselves go there too.
 const TO = SITE.supportEmail;
 
 // The fields for asking Wavemetrik to send a document that is not published
-// on the site. Like the contact form, it prepares an email in the visitor's
-// own app; nothing is sent from the page. `document` names what is asked
-// for; `products` adds a choice of product, and `interest` an optional line
+// on the site. Like the contact form, it is sent from the server
+// (`lib/send-enquiry.ts`) to the support mailbox. `document` names what is
+// asked for; `products` adds a choice of product, and `interest` an optional line
 // about what the visitor is testing.
 export function RequestForm({
   document,
@@ -32,37 +38,26 @@ export function RequestForm({
   // For a dropdown: the button fills the width and its note is centered.
   compact?: boolean;
 }) {
-  const [prepared, setPrepared] = useState(false);
+  const [result, setResult] = useState<"sent" | "failed" | null>(null);
+  const [sending, startSending] = useTransition();
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const field = (name: string) => String(data.get(name) ?? "").trim();
-    const name = field("name");
-    const product = field("product");
-    const wanted = product ? `${product} ${document}` : document;
-    const query = new URLSearchParams({
-      subject: `Request for the ${wanted}: ${name}`,
-      body: [
-        `Please send me the ${wanted}.`,
-        field("interest") && `What I am evaluating: ${field("interest")}`,
-        [name, field("email"), field("company")].join("\n"),
-      ]
-        .filter(Boolean)
-        .join("\n\n"),
-    })
-      .toString()
-      .replace(/\+/g, "%20");
-    capture("document_request_email_draft_opened", {
-      document_type: document,
-      product: product || undefined,
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    data.set("document", document);
+    const product = String(data.get("product") ?? "") || undefined;
+    startSending(async () => {
+      const { ok } = await sendEnquiry(data).catch(() => ({ ok: false }));
+      setResult(ok ? "sent" : "failed");
+      if (!ok) return;
+      form.reset();
+      capture("document_request_sent", { document_type: document, product });
+      posthogLog.info("Document request sent", {
+        document_type: document,
+        product,
+      });
     });
-    posthogLog.info("Document request email draft opened", {
-      document_type: document,
-      product: product || undefined,
-    });
-    setPrepared(true);
-    window.location.assign(`mailto:${TO}?${query}`);
   }
 
   return (
@@ -119,6 +114,7 @@ export function RequestForm({
           pattern=".*\S.*"
         />
       </div>
+      <PhoneField className="col-span-full" />
       {interest && (
         <TextField
           label="What are you evaluating?"
@@ -129,17 +125,20 @@ export function RequestForm({
           className="col-span-full"
         />
       )}
+      <Honeypot />
       <div className="col-span-full mt-2 flex flex-col gap-3">
         <button
           type="submit"
-          className={`cursor-pointer ${pillLink.primary} ${compact ? "sm:w-full" : ""}`}
+          disabled={sending}
+          className={`cursor-pointer disabled:cursor-default disabled:opacity-60 ${pillLink.primary} ${compact ? "sm:w-full" : ""}`}
         >
-          {submitLabel} <ArrowUpRightIcon aria-hidden className="size-4" />
+          {sending ? "Sending…" : submitLabel}{" "}
+          <ArrowUpRightIcon aria-hidden className="size-4" />
         </button>
         <p
           className={`text-footnote/5 text-muted-foreground ${compact ? "text-center" : ""}`}
         >
-          Opens your email app with the request ready to send.
+          We’ll send it to your work email.
         </p>
       </div>
       <div
@@ -147,24 +146,23 @@ export function RequestForm({
         aria-atomic="true"
         className="col-span-full empty:hidden"
       >
-        {prepared && (
-          <div className="flex items-start gap-3 rounded-xl bg-muted p-4 text-footnote/5">
-            <CheckIcon
-              aria-hidden
-              className="mt-0.5 size-4 shrink-0 text-link"
-            />
-            <p>
-              Your request is prepared. Send it from your email app to finish.
-              If your app didn’t open, email{" "}
-              <a
-                href={`mailto:${TO}`}
-                className="font-medium break-all text-link underline underline-offset-4"
-              >
-                {TO}
-              </a>{" "}
-              directly.
-            </p>
-          </div>
+        {result === "sent" && (
+          <FormNotice sent>
+            Your request has been sent. We’ll email the {document} to the
+            address you gave.
+          </FormNotice>
+        )}
+        {result === "failed" && (
+          <FormNotice>
+            We couldn’t send your request. Please try again, or email{" "}
+            <a
+              href={`mailto:${TO}`}
+              className="font-medium break-all text-link underline underline-offset-4"
+            >
+              {TO}
+            </a>{" "}
+            directly.
+          </FormNotice>
         )}
       </div>
     </form>

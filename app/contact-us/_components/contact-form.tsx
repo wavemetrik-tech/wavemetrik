@@ -1,55 +1,52 @@
 "use client";
 
-import { ArrowUpRightIcon, CheckIcon } from "lucide-react";
-import { useState } from "react";
-import { TextAreaField, TextField } from "@/components/form-field";
+import { ArrowUpRightIcon } from "lucide-react";
+import { useState, useTransition } from "react";
+import {
+  FormNotice,
+  Honeypot,
+  PhoneField,
+  TextAreaField,
+  TextField,
+} from "@/components/form-field";
 import { pillLink } from "@/lib/pill-link";
 import { capture } from "@/lib/posthog";
 import { posthogLog } from "@/lib/posthog-log";
+import { sendEnquiry } from "@/lib/send-enquiry";
 import { SITE } from "@/lib/site";
 import styles from "./contact.module.css";
 
 // Every subject goes to the support address; the subject line says which
 // it is.
-const SUBJECTS = [
-  { label: "Product inquiry", to: SITE.supportEmail },
-  { label: "Technical support", to: SITE.supportEmail },
-  { label: "General question", to: SITE.supportEmail },
-];
+const SUBJECTS = ["Product inquiry", "Technical support", "General question"];
 
+// The form is sent from the server (`lib/send-enquiry.ts`) and arrives in
+// the support mailbox as an email that can be answered directly.
 export function ContactForm() {
-  const [sentTo, setSentTo] = useState<string | null>(null);
+  const [result, setResult] = useState<"sent" | "failed" | null>(null);
+  const [sending, startSending] = useTransition();
   const [length, setLength] = useState(0);
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.currentTarget;
     const data = new FormData(form);
-    const name = String(data.get("name") ?? "").trim();
-    const email = String(data.get("email") ?? "").trim();
-    const company = String(data.get("company") ?? "").trim();
-    const message = String(data.get("message") ?? "").trim();
-    if (!message) {
+    if (!String(data.get("message") ?? "").trim()) {
       const field = form.elements.namedItem("message") as HTMLTextAreaElement;
       field.setCustomValidity("Please tell us how we can help.");
       field.reportValidity();
       return;
     }
-    const subject =
-      SUBJECTS.find((item) => item.label === data.get("subject")) ??
-      SUBJECTS[0];
-    const query = new URLSearchParams({
-      subject: `${subject.label}: ${name}`,
-      body: `${message}\n\n${name}\n${email}${company ? `\n${company}` : ""}`,
-    })
-      .toString()
-      .replace(/\+/g, "%20");
-    capture("contact_email_draft_opened", { inquiry_type: subject.label });
-    posthogLog.info("Contact email draft opened", {
-      inquiry_type: subject.label,
+    const inquiry = String(data.get("subject") ?? SUBJECTS[0]);
+    startSending(async () => {
+      const { ok } = await sendEnquiry(data).catch(() => ({ ok: false }));
+      setResult(ok ? "sent" : "failed");
+      if (!ok) return;
+      form.reset();
+      setLength(0);
+      capture("contact_form_sent", { inquiry_type: inquiry });
+      posthogLog.info("Contact form sent", { inquiry_type: inquiry });
     });
-    setSentTo(subject.to);
-    window.location.assign(`mailto:${subject.to}?${query}`);
   }
 
   return (
@@ -65,15 +62,15 @@ export function ContactForm() {
           <legend className={styles.formLabel}>I’d like to discuss</legend>
           <div className="segmented">
             {SUBJECTS.map((subject, index) => (
-              <label key={subject.label} className="segmented-option">
+              <label key={subject} className="segmented-option">
                 <input
                   className="sr-only"
                   type="radio"
                   name="subject"
-                  value={subject.label}
+                  value={subject}
                   defaultChecked={index === 0}
                 />
-                <span>{subject.label}</span>
+                <span>{subject}</span>
               </label>
             ))}
           </div>
@@ -106,6 +103,7 @@ export function ContactForm() {
               autoComplete="organization"
               maxLength={150}
             />
+            <PhoneField />
           </fieldset>
           <TextAreaField
             label="Your message"
@@ -125,36 +123,38 @@ export function ContactForm() {
             {length.toLocaleString()} / 2,000
           </p>
         </div>
+        <Honeypot />
         <div className={styles.submit}>
           <button
             type="submit"
-            className={`cursor-pointer ${pillLink.primary}`}
+            disabled={sending}
+            className={`cursor-pointer disabled:cursor-default disabled:opacity-60 ${pillLink.primary}`}
           >
-            Open email draft <ArrowUpRightIcon aria-hidden className="size-4" />
+            {sending ? "Sending…" : "Send message"}{" "}
+            <ArrowUpRightIcon aria-hidden className="size-4" />
           </button>
           <p className="text-footnote/5 text-muted-foreground">
-            Opens your email app with your message ready to review and send.
+            Goes straight to our support team. We reply by email.
           </p>
         </div>
         <div aria-live="polite" aria-atomic="true" className={styles.status}>
-          {sentTo && (
-            <div className="flex items-start gap-3 rounded-xl bg-muted p-4 text-footnote/5">
-              <CheckIcon
-                aria-hidden
-                className="mt-0.5 size-4 shrink-0 text-link"
-              />
-              <p>
-                Your email draft is prepared. Send it from your email app to
-                finish. If your app didn’t open, email{" "}
-                <a
-                  href={`mailto:${sentTo}`}
-                  className="font-medium break-all text-link underline underline-offset-4"
-                >
-                  {sentTo}
-                </a>{" "}
-                directly.
-              </p>
-            </div>
+          {result === "sent" && (
+            <FormNotice sent>
+              Your message has been sent. We’ll reply to the email address
+              you gave.
+            </FormNotice>
+          )}
+          {result === "failed" && (
+            <FormNotice>
+              We couldn’t send your message. Please try again, or email{" "}
+              <a
+                href={`mailto:${SITE.supportEmail}`}
+                className="font-medium break-all text-link underline underline-offset-4"
+              >
+                {SITE.supportEmail}
+              </a>{" "}
+              directly.
+            </FormNotice>
           )}
         </div>
       </form>
