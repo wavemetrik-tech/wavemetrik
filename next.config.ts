@@ -52,7 +52,19 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   poweredByHeader: false,
   async headers() {
-    return [{ source: "/:path*", headers: securityHeaders }];
+    return [
+      { source: "/:path*", headers: securityHeaders },
+      // The PDFs in `public/documents` are reached by address only: no page
+      // links to them and the sitemap leaves them out. They download rather
+      // than open, and search engines are told not to list them.
+      {
+        source: "/documents/:file",
+        headers: [
+          { key: "Content-Disposition", value: "attachment" },
+          { key: "X-Robots-Tag", value: "noindex, nofollow" },
+        ],
+      },
+    ];
   },
   async redirects() {
     return [

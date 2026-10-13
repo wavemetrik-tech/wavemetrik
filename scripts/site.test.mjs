@@ -177,6 +177,27 @@ test("request-only documents are not served", async () => {
     assert.equal((await get(path)).status, 404, path);
 });
 
+test("unlisted documents download, and nothing points to them", async () => {
+  for (const file of [
+    "Wavemetrik-Test-Offerings.pdf",
+    "MT-Wave-Datasheet.pdf",
+    "MT-C-Series-Datasheet.pdf",
+  ]) {
+    const response = await get(`/documents/${file}`);
+    assert.equal(response.status, 200, file);
+    assert.equal(response.headers.get("content-type"), "application/pdf", file);
+    assert.equal(response.headers.get("content-disposition"), "attachment", file);
+    assert.match(response.headers.get("x-robots-tag") ?? "", /noindex/, file);
+    await response.arrayBuffer();
+  }
+  assert.ok(!sitemap.includes("/documents/"), "the sitemap lists a document");
+  for (const [path, page] of pages)
+    assert.ok(
+      !page.markup.includes("/documents/"),
+      `${path} mentions an unlisted document`,
+    );
+});
+
 test("security headers are sent with pages and error pages", async () => {
   for (const path of ["/", "/contact-us", "/no-such-page"]) {
     const { headers } = await get(path);
