@@ -17,7 +17,7 @@ export const metadata: Metadata = pageMetadata({
   title: "Wavemetrik | Wi-Fi test and measurement systems",
   absolute: true,
   description:
-    "Wi-Fi test and measurement from Wavemetrik: real-radio Wi-Fi 7 client emulators, interference generators and shielded RF test systems for repeatable lab testing.",
+    "Wi-Fi test and measurement from Wavemetrik real-radio Wi-Fi 7 client emulators, interference generators and shielded RF test systems for repeatable lab testing.",
   path: "/",
 });
 const instruments = [
