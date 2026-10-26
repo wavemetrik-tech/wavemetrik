@@ -48,6 +48,7 @@ const nextConfig: NextConfig = {
   /* Compile shared page and landing illustration styles with Tailwind. */
   experimental: {
     agentFeedback: true,
+    agentUpgrade: "security",
   },
   cacheComponents: true,
   poweredByHeader: false,
