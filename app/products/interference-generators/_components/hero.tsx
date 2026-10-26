@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PlayIcon } from "lucide-react";
 
 import { DatasheetRequest } from "@/components/datasheet-request";
 import { HeadlineSpecs } from "@/components/headline-specs";
@@ -39,6 +40,11 @@ export function Hero() {
               product="MT-Wave"
               className={pillLink.outline}
             />
+            {/* The browser's own player opens the recording. */}
+            <a href="/videos/MT-Wave-demo.mp4" className={pillLink.outline}>
+              <PlayIcon aria-hidden className="size-4" />
+              Watch the demo
+            </a>
           </div>
         </div>
 

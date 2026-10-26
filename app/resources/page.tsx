@@ -5,6 +5,7 @@ import {
   ArrowUpRightIcon,
   BookOpenIcon,
   FileTextIcon,
+  PlayIcon,
   PresentationIcon,
 } from "lucide-react";
 import { JsonLd } from "@/components/json-ld";
@@ -156,6 +157,24 @@ export default function ResourcesPage() {
                   <ArrowUpRightIcon aria-hidden className="size-4" />
                 </span>
               </Link>
+            </li>
+            <li>
+              <a
+                href="/videos/MT-Wave-demo.mp4"
+                className={`group ${DOCUMENT_CARD}`}
+              >
+                <span className="min-w-0">
+                  <span className="block text-headline">
+                    Watch the MT-Wave demo
+                  </span>
+                  <span className="mt-1 block text-subhead/[1.375rem] text-muted-foreground">
+                    A ten-minute walkthrough of the instrument.
+                  </span>
+                </span>
+                <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-muted text-link transition-colors duration-200 group-hover:bg-primary group-hover:text-primary-foreground motion-reduce:transition-none">
+                  <PlayIcon aria-hidden className="size-4" />
+                </span>
+              </a>
             </li>
             <li>
               <DatasheetRequest
